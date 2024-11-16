@@ -11,27 +11,39 @@
     <script>
       window.onload = () => {
 
+        console.log("Registering protocol handler");
+        const handler = `${document.location}#%s`
+        console.log(handler)
+
         navigator.registerProtocolHandler(
           "web+acct",
-          `${document.location}#%s`,
+          handler,
           "Account Viewer"
         );
 
         const fragment = document.location.hash.slice(1);
+
+        console.log(fragment)
+
         if (fragment && fragment.startsWith("web+acct:")) {
           const acct = fragment.slice(4)
+          console.log(acct)
           const parts = acct.split("@");
           const domain = parts[1];
-          const res = fetch(`https://${domain}/.well-known/webfinger?resource=${encodeURIComponent(acct)}`)
+          console.log(domain)
+          fetch(`https://${domain}/.well-known/webfinger?resource=${encodeURIComponent(acct)}`)
             .then(res => res.json())
             .then(json => {
+              console.dir(json)
               const links = json.links;
               const ap = links.find(link => link.rel === "self" && link.type in ["application/activity+json", "application/ld+json; profile=\"https://www.w3.org/ns/activitystreams\""]);
               if (ap) {
-                const apres = fetch(ap.href)
+                console.dir(ap)
+                fetch(ap.href)
                   .then(res => res.json())
                   .then(json => {
-                    const account = document.createElement("div");
+                    console.dir(json)
+                    const account = document.getElementById("account");
                     account.innerHTML = `
                       <h2>${json.name}</h2>
                       <p>${json.summary}</p>
@@ -39,13 +51,19 @@
                     `;
                   })
                   .catch(err => {
+                    console.error(err)
                     alert(err.message);
                   });
               } else {
                 const profile = links.find(link => link.rel === "https://webfinger.net/rel/profile-page" && link.type === "text/html");
+                if (profile) {
+                  console.dir(profile);
+                  document.location = profile.href;
+                }
               }
             })
             .catch(err => {
+              console.error(err)
               alert(err.message);
             });
         }
