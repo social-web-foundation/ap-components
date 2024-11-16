@@ -10,7 +10,7 @@ class AcctHandler extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
         <h2 id="name">(name)</h2>
-        <div id="summary">(summary)</summary>
+        <div id="summary">(summary)</div>
         <p><a id="url" href="javascript:void(0)">(url)</a></p>
       `;
   }
@@ -54,7 +54,7 @@ class AcctHandler extends HTMLElement {
     const summary = actor.summary;
     const url = actor.url;
     this.shadowRoot.getElementById('name').textContent = name;
-    this.shadowRoot.getElementById('summary').textContent = summary;
+    this.shadowRoot.getElementById('summary').innerHTML = summary;
     this.shadowRoot.getElementById('url').textContent = url;
     this.shadowRoot.getElementById('url').href = url;
   }
