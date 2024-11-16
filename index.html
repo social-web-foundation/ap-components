@@ -42,7 +42,7 @@
               const ap = links.find(link => link.rel === "self" && link.type in ["application/activity+json", "application/ld+json; profile=\"https://www.w3.org/ns/activitystreams\""]);
               if (ap) {
                 console.dir(ap)
-                fetch(ap.href)
+                fetch(ap.href, { headers: { Accept: ap.type } })
                   .then(res => res.json())
                   .then(json => {
                     console.dir(json)
