@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Account Viewer</title>
+    <title>Account Handler</title>
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <h1>Account Viewer</h1>
+    <h1>Account Handler</h1>
+    <p><a href="javascript:registerAcctHandler()">Register</a></p>
     <div id="account">
     </div>
     <script>
-      window.onload = () => {
 
+      function registerAcctHandler() {
         console.log("Registering protocol handler");
         const handler = `${document.location}#%s`
         console.log(handler)
 
         navigator.registerProtocolHandler(
           "web+acct",
-          handler,
-          "Account Viewer"
+          handler
         );
+      }
+
+      window.onload = () => {
 
         const fragment = document.location.hash.slice(1);
 
