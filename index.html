@@ -8,9 +8,10 @@
     <h1>Account Handler</h1>
     <p><a href="javascript:registerAcctHandler()">Register</a></p>
     <div id="account">
+      <acct-handler id="handler" ></acct-handler>
     </div>
+    <script type="module" src="acct-handler.js"></script>
     <script>
-
       function registerAcctHandler() {
         console.log("Registering protocol handler");
         const handler = `${document.location}#%s`
@@ -30,45 +31,8 @@
 
         if (fragment && fragment.startsWith("web+acct:")) {
           const acct = fragment.slice(4)
-          console.log(acct)
-          const parts = acct.split("@");
-          const domain = parts[1];
-          console.log(domain)
-          fetch(`https://${domain}/.well-known/webfinger?resource=${encodeURIComponent(acct)}`)
-            .then(res => res.json())
-            .then(json => {
-              console.dir(json)
-              const links = json.links;
-              const ap = links.find(link => link.rel === "self" && link.type === "application/activity+json");
-              if (ap) {
-                console.dir(ap)
-                fetch(ap.href, { headers: { Accept: ap.type } })
-                  .then(res => res.json())
-                  .then(json => {
-                    console.dir(json)
-                    const account = document.getElementById("account");
-                    account.innerHTML = `
-                      <h2>${json.name}</h2>
-                      <p>${json.summary}</p>
-                      <p><a href="${json.url}">${json.url}</a></p>
-                    `;
-                  })
-                  .catch(err => {
-                    console.error(err)
-                    alert(err.message);
-                  });
-              } else {
-                const profile = links.find(link => link.rel === "https://webfinger.net/rel/profile-page" && link.type === "text/html");
-                if (profile) {
-                  console.dir(profile);
-                  document.location = profile.href;
-                }
-              }
-            })
-            .catch(err => {
-              console.error(err)
-              alert(err.message);
-            });
+          const handler = document.getElementById("handler")
+          handler.acct = acct
         }
       }
     </script>
