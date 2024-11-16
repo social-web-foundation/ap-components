@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Account Viewer</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <h1>Account Viewer</h1>
+    <div id="account">
+    </div>
+    <script>
+      navigator.registerProtocolHandler(
+        "web+acct",
+        `${document.location}#%s`,
+        "Account Viewer"
+      );
+      const fragment = document.location.hash.slice(1);
+      if (fragment && fragment.startsWith("web+acct:")) {
+        const acct = fragment.slice(4)
+        const parts = acct.split("@");
+        const domain = parts[1];
+        const res = fetch(`https://${domain}/.well-known/webfinger?resource=${encodeURIComponent(acct)}`)
+          .then(res => res.json())
+          .then(json => {
+            const links = json.links;
+            const ap = links.find(link => link.rel === "self" && link.type in ["application/activity+json", "application/ld+json; profile=\"https://www.w3.org/ns/activitystreams\""]);
+            if (ap) {
+              const apres = fetch(ap.href)
+                .then(res => res.json())
+                .then(json => {
+                  const account = document.createElement("div");
+                  account.innerHTML = `
+                    <h2>${json.name}</h2>
+                    <p>${json.summary}</p>
+                    <p><a href="${json.url}">${json.url}</a></p>
+                  `;
+                })
+                .catch(err => {
+                  alert(err.message);
+                });
+            } else {
+              const profile = links.find(link => link.rel === "https://webfinger.net/rel/profile-page" && link.type === "text/html");
+            }
+          })
+          .catch(err => {
+            alert(err.message);
+          });
+      }
+    </script>
+  </body>
+</html>
