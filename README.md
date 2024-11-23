@@ -4,4 +4,4 @@ This is an experiment with making a simple Web site that can display the content
 
 ## License
 
-This code is licensed under the Academic Free License version 3.0.  See the [LICENSE](./LICENSE) file for details.
+This code is licensed under the Academic Free License version 3.0.  See the [LICENSE](./LICENSE.md) file for details.
