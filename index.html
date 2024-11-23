@@ -13,10 +13,10 @@
     <script type="module" src="acct-handler.js"></script>
     <script>
       function registerAcctHandler() {
+        const loc = document.location.origin + document.location.pathname;
         console.log("Registering protocol handler");
-        const handler = `${document.location}#%s`
+        const handler = `${loc}#%s`
         console.log(handler)
-
         navigator.registerProtocolHandler(
           "web+acct",
           handler
@@ -26,8 +26,6 @@
       window.onload = () => {
 
         const fragment = document.location.hash.slice(1);
-
-        console.log(fragment)
 
         if (fragment && fragment.startsWith("web+acct:")) {
           const acct = fragment.slice(4)
