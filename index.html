@@ -8,9 +8,9 @@
     <h1>Account Handler</h1>
     <p><a href="javascript:registerAcctHandler()">Register</a></p>
     <div id="account">
-      <acct-handler id="handler" ></acct-handler>
+      <activitypub-actor id="handler" ></activitypub-actor>
     </div>
-    <script type="module" src="acct-handler.js"></script>
+    <script type="module" src="./activitypub-actor.js"></script>
     <script>
       function registerAcctHandler() {
         const loc = document.location.origin + document.location.pathname;
@@ -30,7 +30,7 @@
         if (address && address.startsWith("web+acct:")) {
           const acct = address.slice(4) // take off the web+ part
           const handler = document.getElementById("handler")
-          handler.acct = acct
+          handler.webfinger = acct
         }
       }
     </script>
