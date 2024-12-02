@@ -67,6 +67,14 @@ class ActivityPubActorProfile extends HTMLElement {
   set url(value) {
     this.setAttribute('url', value);
   }
+
+  get webfinger() {
+    return this.getAttribute('webfinger');
+  }
+
+  set webfinger(value) {
+    this.setAttribute('webfinger', value);
+  }
 }
 
 // Define the custom element
