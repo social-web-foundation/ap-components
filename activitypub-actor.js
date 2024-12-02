@@ -113,7 +113,7 @@ class ActivityPubActor extends HTMLElement {
     const [protocol, address] = webfinger.split(':');
 
     const profile = this.shadowRoot.querySelector('.profile');
-    profile.webfinger = webfinger;
+    profile.webfinger = address;
 
     const parts = address.split("@");
     const domain = parts[1];
