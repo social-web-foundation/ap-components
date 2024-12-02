@@ -15,7 +15,7 @@ class ActivityPubActorProfile extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
         <h2 class="name">(name)</h2>
-        <avatar-icon class="icon" size="512"></avatar-icon>
+        <avatar-icon class="icon" size="128"></avatar-icon>
         <p class="webfinger">(webfinger)</p>
         <div class="summary">(summary)</div>
         <p><a class="url" href="javascript:void(0)">(url)</a></p>

@@ -17,8 +17,8 @@ class AvatarIcon extends HTMLElement {
                   display: inline-block;
               }
               .avatar {
-                  width: var(--avatar-size, 256px);
-                  height: var(--avatar-size, 256px);
+                  width: var(--avatar-size, 128px);
+                  height: var(--avatar-size, 128px);
                   background-color: lightgray;
                   background-size: cover;
                   background-position: center;
@@ -55,7 +55,7 @@ class AvatarIcon extends HTMLElement {
   }
 
   updateSize() {
-    const size = this.getAttribute('size') || '256'; // Default to 256px
+    const size = this.getAttribute('size') || '128'; // Default to 128px
     const avatarElement = this.shadowRoot.querySelector('.avatar');
     avatarElement.style.setProperty('--avatar-size', `${size}px`);
   }
