@@ -84,14 +84,14 @@ class ActivityPubActor extends HTMLElement {
       profile.summary = json.summary;
       profile.url = json.url;
 
-      this.setIcon(json.icon);
+      this.setIcon(profile, json.icon);
 
     } catch (err) {
       console.error(err)
     }
   }
 
-  setIcon(icon) {
+  setIcon(profile, icon) {
 
     if (icon) {
       if (typeof icon === 'string') {
@@ -106,7 +106,7 @@ class ActivityPubActor extends HTMLElement {
         }
         if (iconObj) {
           if (asMatch(iconObj, 'Image')) {
-            this.setIcon(iconObj.url);
+            this.setIcon(profile, iconObj.url);
           } else if (asMatch(iconObj, 'Link')) {
             profile.icon = icon.href;
           }
