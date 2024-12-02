@@ -102,10 +102,11 @@ class ActivityPubActor extends HTMLElement {
 
   async updateWebfinger(webfinger) {
 
+    const [protocol, address] = webfinger.split(':');
+
     const profile = this.shadowRoot.getElementById('profile');
     profile.webfinger = webfinger;
 
-    const [protocol, address] = webfinger.split(':');
     const parts = address.split("@");
     const domain = parts[1];
     const webfingerUrl = `https://${domain}/.well-known/webfinger?resource=acct:${address}`;
@@ -136,7 +137,7 @@ class ActivityPubActor extends HTMLElement {
       profile.name = json.name;
       profile.summary = json.summary;
       profile.url = json.url;
-      
+
     } catch (err) {
       console.error(err)
     }
