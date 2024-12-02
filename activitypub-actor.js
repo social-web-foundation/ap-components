@@ -16,30 +16,30 @@ class ActivityPubActorProfile extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
-        <h2 id="name">(name)</h2>
-        <p id="webfinger">(webfinger)</p>
-        <div id="summary">(summary)</div>
-        <p><a id="url" href="javascript:void(0)">(url)</a></p>
+        <h2 class="name">(name)</h2>
+        <p class="webfinger">(webfinger)</p>
+        <div class="summary">(summary)</div>
+        <p><a class="url" href="javascript:void(0)">(url)</a></p>
       `;
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case 'name':
-        this.shadowRoot.getElementById('name').textContent = newValue;
+        this.shadowRoot.querySelector('.name').textContent = newValue;
         break;
       case 'webfinger':
-        this.shadowRoot.getElementById('webfinger').textContent = newValue;
+        this.shadowRoot.querySelector('.webfinger').textContent = newValue;
         break;
       case 'summary':
-        this.shadowRoot.getElementById('summary').innerHTML = newValue;
+        this.shadowRoot.querySelector('.summary').innerHTML = newValue;
         break;
       case 'url':
-        this.shadowRoot.getElementById('url').textContent = newValue;
-        this.shadowRoot.getElementById('url').href = newValue;
+        this.shadowRoot.querySelector('.url').textContent = newValue;
+        this.shadowRoot.querySelector('.url').href = newValue;
         break;
       case 'icon':
-        this.shadowRoot.getElementById('icon').src = newValue;
+        this.shadowRoot.querySelector('.icon').src = newValue;
         break;
     }
   }
@@ -85,7 +85,7 @@ class ActivityPubActor extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
         <div>
-          <activitypub-actor-profile id="profile"></activitypub-actor-profile>
+          <activitypub-actor-profile class="profile" />
         </div>
       `;
   }
@@ -104,7 +104,7 @@ class ActivityPubActor extends HTMLElement {
 
     const [protocol, address] = webfinger.split(':');
 
-    const profile = this.shadowRoot.getElementById('profile');
+    const profile = this.shadowRoot.querySelector('.profile');
     profile.webfinger = webfinger;
 
     const parts = address.split("@");
@@ -132,7 +132,7 @@ class ActivityPubActor extends HTMLElement {
       })
       const json = await res.json();
 
-      const profile = this.shadowRoot.getElementById('profile');
+      const profile = this.shadowRoot.querySelector('.profile');
 
       profile.name = json.name;
       profile.summary = json.summary;
