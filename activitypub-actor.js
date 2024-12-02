@@ -5,7 +5,7 @@ class ActivityPubActor extends HTMLElement {
   static get observedAttributes() {
     return [
       'webfinger',
-      'actorId',
+      'actor-id',
       'name',
       'summary',
       'url'
@@ -27,7 +27,7 @@ class ActivityPubActor extends HTMLElement {
       case 'webfinger':
         this.updateWebfinger(newValue);
         break;
-      case 'actorId':
+      case 'actor-id':
         this.updateActorId(newValue);
         break;
       case 'name':
@@ -56,7 +56,7 @@ class ActivityPubActor extends HTMLElement {
       const ap = links.find(link =>
         link.rel === "self" && link.type === "application/activity+json");
       if (ap) {
-        this.setAttribute('id', ap.href);
+        this.actorId = ap.href;
       }
     } catch (err) {
       console.error(err)
@@ -70,9 +70,9 @@ class ActivityPubActor extends HTMLElement {
       })
       const json = await res.json();
 
-      this.setAttribute('name', json.name);
-      this.setAttribute('summary', json.summary);
-      this.setAttribute('url', json.url);
+      this.name = json.name;
+      this.summary = json.summary;
+      this.url = json.url;
 
     } catch (err) {
       console.error(err)
@@ -85,6 +85,38 @@ class ActivityPubActor extends HTMLElement {
 
   set webfinger(value) {
     this.setAttribute('webfinger', value);
+  }
+
+  get actorId() {
+    return this.getAttribute('actor-id');
+  }
+
+  set actorId(value) {
+    this.setAttribute('actor-id', value);
+  }
+
+  get name() {
+    return this.getAttribute('name');
+  }
+
+  set name(value) {
+    this.setAttribute('name', value);
+  }
+
+  get summary() {
+    return this.getAttribute('summary');
+  }
+
+  set summary(value) {
+    this.setAttribute('summary', value);
+  }
+
+  get url() {
+    return this.getAttribute('url');
+  }
+
+  set url(value) {
+    this.setAttribute('url', value);
   }
 }
 
