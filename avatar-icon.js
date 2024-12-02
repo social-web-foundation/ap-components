@@ -45,9 +45,9 @@ class AvatarIcon extends HTMLElement {
 
   updateAvatar() {
     const avatarElement = this.shadowRoot.querySelector('.avatar');
-    const icon = this.getAttribute('url');
+    const url = this.getAttribute('url');
 
-    if (icon) {
+    if (url) {
       avatarElement.style.backgroundImage = `url(${url})`;
     } else {
       avatarElement.style.backgroundImage = 'none';
