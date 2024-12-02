@@ -59,6 +59,22 @@ class AvatarIcon extends HTMLElement {
     const avatarElement = this.shadowRoot.querySelector('.avatar');
     avatarElement.style.setProperty('--avatar-size', `${size}px`);
   }
+
+  get url() {
+    return this.getAttribute('url');
+  }
+
+  set url(value) {
+    this.setAttribute('url', value);
+  }
+
+  get size() {
+    return this.getAttribute('size');
+  }
+
+  set size(value) {
+    this.setAttribute('size', value);
+  }
 }
 
 // Define the custom element
