@@ -75,6 +75,17 @@ class ActivityPubActor extends HTMLElement {
       profile.summary = json.summary;
       profile.url = json.url;
 
+      if (json.icon) {
+        if (Array.isArray(json.icon)) {
+          // TODO: find the best size
+          profile.icon = json.icon[0].href;
+        } else if (typeof json.icon === 'object') {
+          profile.icon = json.icon.href;
+        } else if (typeof json.icon === 'string') {
+          profile.icon = json.icon;
+        }
+      }
+
     } catch (err) {
       console.error(err)
     }

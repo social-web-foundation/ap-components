@@ -1,4 +1,4 @@
-
+import './avatar-icon.js';
 class ActivityPubActorProfile extends HTMLElement {
   static get observedAttributes() {
     return [
@@ -15,6 +15,7 @@ class ActivityPubActorProfile extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
         <h2 class="name">(name)</h2>
+        <avatar-icon class="icon" size="512"></avatar-icon>
         <p class="webfinger">(webfinger)</p>
         <div class="summary">(summary)</div>
         <p><a class="url" href="javascript:void(0)">(url)</a></p>
@@ -37,7 +38,7 @@ class ActivityPubActorProfile extends HTMLElement {
         this.shadowRoot.querySelector('.url').href = newValue;
         break;
       case 'icon':
-        this.shadowRoot.querySelector('.icon').src = newValue;
+        this.shadowRoot.querySelector('.icon').url = newValue;
         break;
     }
   }
@@ -72,6 +73,14 @@ class ActivityPubActorProfile extends HTMLElement {
 
   set webfinger(value) {
     this.setAttribute('webfinger', value);
+  }
+
+  get icon() {
+    return this.getAttribute('icon');
+  }
+
+  set icon(value) {
+    this.setAttribute('icon', value);
   }
 }
 
