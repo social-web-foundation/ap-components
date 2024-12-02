@@ -21,6 +21,12 @@ class ActivityPubActor extends HTMLElement {
       `;
   }
 
+  connectedCallback() {
+    if (this.hasAttribute('webfinger')) {
+      this.updateWebfinger(this.webfinger);
+    }
+  }
+
   attributeChangedCallback(name, oldValue, newValue) {
     switch (name) {
       case 'webfinger':
