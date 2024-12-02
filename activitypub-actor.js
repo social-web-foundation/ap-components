@@ -3,6 +3,15 @@
 
 import './activitypub-actor-profile.js';
 
+AS2_NS = 'https://www.w3.org/ns/activitystreams#';
+AS2_PREFIX = 'as:';
+
+function asMatch(obj, type) {
+  return obj.type === type ||
+    obj.type === `${AS2_PREFIX}${type}` ||
+    obj.type === `${AS2_NS}${type}`;
+}
+
 class ActivityPubActor extends HTMLElement {
   static get observedAttributes() {
     return [
@@ -75,19 +84,34 @@ class ActivityPubActor extends HTMLElement {
       profile.summary = json.summary;
       profile.url = json.url;
 
-      if (json.icon) {
-        if (Array.isArray(json.icon)) {
-          // TODO: find the best size
-          profile.icon = json.icon[0].href;
-        } else if (typeof json.icon === 'object') {
-          profile.icon = json.icon.href;
-        } else if (typeof json.icon === 'string') {
-          profile.icon = json.icon;
-        }
-      }
+      this.setIcon(json.icon);
 
     } catch (err) {
       console.error(err)
+    }
+  }
+
+  setIcon(icon) {
+
+    if (icon) {
+      if (typeof icon === 'string') {
+        profile.icon = icon;
+      } else {
+        let iconObj;
+        if (Array.isArray(icon)) {
+          // TODO: pick best fit
+          iconObj = icon[0];
+        } else if (typeof icon === 'object') {
+          iconObj = icon;
+        }
+        if (iconObj) {
+          if (asMatch(iconObj, 'Image')) {
+            this.setIcon(iconObj.url);
+          } else if (asMatch(iconObj, 'Link')) {
+            profile.icon = icon.href;
+          }
+        }
+      }
     }
   }
 
