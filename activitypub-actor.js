@@ -3,8 +3,8 @@
 
 import './activitypub-actor-profile.js';
 
-AS2_NS = 'https://www.w3.org/ns/activitystreams#';
-AS2_PREFIX = 'as:';
+const AS2_NS = 'https://www.w3.org/ns/activitystreams#';
+const AS2_PREFIX = 'as:';
 
 function asMatch(obj, type) {
   return obj.type === type ||
