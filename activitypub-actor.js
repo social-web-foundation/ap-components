@@ -34,7 +34,7 @@ class ActivityPubActor extends HTMLElement {
         this.shadowRoot.getElementById('name').textContent = newValue;
         break;
       case 'summary':
-        this.shadowRoot.getElementById('summary').textContent = newValue;
+        this.shadowRoot.getElementById('summary').innerHTML = newValue;
         break;
       case 'url':
         this.shadowRoot.getElementById('url').textContent = newValue;
