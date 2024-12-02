@@ -36,7 +36,7 @@ class AvatarIcon extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'icon') {
+    if (name === 'url') {
       this.updateAvatar();
     } else if (name === 'size') {
       this.updateSize();
