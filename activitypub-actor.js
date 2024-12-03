@@ -2,6 +2,7 @@
 // Description: Fetches the actor object from the given webfinger and displays the name, summary, and url of the actor.
 
 import './activitypub-actor-profile.js';
+import './activitypub-activity-collection.js';
 
 const AS2_NS = 'https://www.w3.org/ns/activitystreams#';
 const AS2_PREFIX = 'as:';
@@ -26,6 +27,24 @@ class ActivityPubActor extends HTMLElement {
     this.shadowRoot.innerHTML = `
         <div>
           <activitypub-actor-profile class="profile" />
+          <div class="feed-selector">
+            <ul>
+              <li>
+                <a href="javascript:void(0)" class="outbox menu selected">Outbox</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="following menu">Following</a>
+              </li>
+              <li>
+                <a href="javascript:void(0)" class="followers menu">Followers</a></li>
+              <li>
+                <a href="javascript:void(0)" class="liked menu">Liked</a>
+              </li>
+            </ul>
+          </div>
+          <div class="feed">
+            <activitypub-activity-collection class="outbox-feed" />
+          </div>
         </div>
       `;
   }
@@ -85,6 +104,10 @@ class ActivityPubActor extends HTMLElement {
       profile.url = json.url;
 
       this.setIcon(profile, json.icon);
+
+      const outboxFeed = this.shadowRoot.querySelector('.outbox-feed');
+
+      outboxFeed.feedId = json.outbox;
 
     } catch (err) {
       console.error(err)
