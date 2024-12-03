@@ -46,7 +46,6 @@ class ActivityPubActivityCollection extends HTMLElement {
     }
 
     const res = await fetch(feedId, {
-      mode: 'no-cors',
       headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
     });
     const collection = await res.json();
@@ -61,7 +60,6 @@ class ActivityPubActivityCollection extends HTMLElement {
       let next = collection.first;
       while (next && activities.length < MAX_ACTIVITIES) {
         const res = await fetch(next, {
-          mode: 'no-cors',
           headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
         });
         const page = await res.json();

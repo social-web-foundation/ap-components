@@ -78,7 +78,6 @@ class ActivityPubActor extends HTMLElement {
 
     try {
       const res = await fetch(webfingerUrl, {
-        mode: 'no-cors',
         headers: { Accept: 'application/jrd+json, application/json' }
       });
       const json = await res.json();
@@ -96,7 +95,6 @@ class ActivityPubActor extends HTMLElement {
   async updateActorId(id) {
     try {
       const res = await fetch(id, {
-        mode: 'no-cors',
         headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
       })
       const json = await res.json();
