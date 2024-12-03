@@ -77,7 +77,10 @@ class ActivityPubActor extends HTMLElement {
     const webfingerUrl = `https://${domain}/.well-known/webfinger?resource=acct:${address}`;
 
     try {
-      const res = await fetch(webfingerUrl);
+      const res = await fetch(webfingerUrl, {
+        mode: 'no-cors',
+        headers: { Accept: 'application/jrd+json, application/json' }
+      });
       const json = await res.json();
       const links = json.links;
       const ap = links.find(link =>
@@ -93,7 +96,8 @@ class ActivityPubActor extends HTMLElement {
   async updateActorId(id) {
     try {
       const res = await fetch(id, {
-        headers: { Accept: 'application/activity+json' }
+        mode: 'no-cors',
+        headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
       })
       const json = await res.json();
 

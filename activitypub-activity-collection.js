@@ -40,7 +40,10 @@ class ActivityPubActivityCollection extends HTMLElement {
 
   async updateFeedId() {
     const feedId = this.getAttribute('feed-id');
-    const res = await fetch(feedId);
+    const res = await fetch(feedId, {
+      mode: 'no-cors',
+      headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
+    });
     const collection = await res.json();
 
     const activities = [];
@@ -52,7 +55,10 @@ class ActivityPubActivityCollection extends HTMLElement {
     } else if (collection.first) {
       let next = collection.first;
       while (next && activities.length < MAX_ACTIVITIES) {
-        const res = await fetch(next);
+        const res = await fetch(next, {
+          mode: 'no-cors',
+          headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
+        });
         const page = await res.json();
         if (page.items) {
           activities.push(...page.items);

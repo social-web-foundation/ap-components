@@ -38,7 +38,10 @@ class ActivityPubActivity extends HTMLElement {
   }
 
   async updateActivityId(activityId) {
-    const res = await fetch(activityId);
+    const res = await fetch(activityId, {
+      mode: 'no-cors',
+      headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
+    });
     const activity = await res.json();
     this.activity = activity;
   }
