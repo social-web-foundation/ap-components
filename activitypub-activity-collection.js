@@ -29,17 +29,22 @@ class ActivityPubActivityCollection extends HTMLElement {
   }
 
   connectedCallback() {
-    this.updateFeedId();
+    if (this.hasAttribute('feed-id')) {
+      this.updateFeedId(this.feedId);
+    }
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'feed-id') {
-      this.updateFeedId();
+      this.updateFeedId(newValue);
     }
   }
 
-  async updateFeedId() {
-    const feedId = this.getAttribute('feed-id');
+  async updateFeedId(feedId) {
+    if (!feedId) {
+      return;
+    }
+
     const res = await fetch(feedId, {
       mode: 'no-cors',
       headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
