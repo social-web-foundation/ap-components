@@ -22,7 +22,7 @@ class ActivityPubArticle extends HTMLElement {
             }
         </style>
         <div class="object">
-        <p class="name"></p>
+        <h3 class="name"></h3>
         <p class="summary"></p>
         <p class="url"><a class="url-link" href=""></a></p>
         <p class="published"></p>
