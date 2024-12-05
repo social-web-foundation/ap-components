@@ -25,27 +25,36 @@ class ActivityPubActor extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.shadowRoot.innerHTML = `
-        <div>
-          <activitypub-actor-profile class="profile" />
-          <div class="feed-selector">
-            <ul>
-              <li>
-                <a href="javascript:void(0)" class="outbox menu selected">Outbox</a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" class="following menu">Following</a>
-              </li>
-              <li>
-                <a href="javascript:void(0)" class="followers menu">Followers</a></li>
-              <li>
-                <a href="javascript:void(0)" class="liked menu">Liked</a>
-              </li>
-            </ul>
-          </div>
-          <div class="feed">
-            <activitypub-activity-collection class="outbox-feed" />
-          </div>
+      <style>
+        .actor {
+          display: block;
+        }
+        .feed-selector, .feed {
+          display: block;
+          visibility: visible;
+        }
+      </style>
+      <div class="actor">
+        <activitypub-actor-profile class="profile" />
+        <div class="feed-selector">
+          <ul>
+            <li>
+              <a href="javascript:void(0)" class="outbox menu selected">Outbox</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="following menu">Following</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)" class="followers menu">Followers</a></li>
+            <li>
+              <a href="javascript:void(0)" class="liked menu">Liked</a>
+            </li>
+          </ul>
         </div>
+        <div class="feed">
+          <activitypub-activity-collection class="outbox-feed" />
+        </div>
+      </div>
       `;
   }
 
