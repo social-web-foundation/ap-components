@@ -49,6 +49,7 @@ class ActivityPubActor extends HTMLElement {
             </li>
             <li>
               <button class="followers">Followers</button>
+            </li>
             <li>
               <button class="liked">Liked</button>
             </li>
