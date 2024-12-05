@@ -26,7 +26,12 @@ class ActivityPubActivity extends HTMLElement {
   }
 
   connectedCallback() {
-    this.updateActivityId(this.activityId);
+    if (this.hasAttribute('activity-id')) {
+      this.updateActivityId(this.activityId);
+    }
+    if (this.hasAttribute('activity')) {
+      this.updateActivity(this.activity);
+    }
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -38,10 +43,20 @@ class ActivityPubActivity extends HTMLElement {
   }
 
   async updateActivityId(activityId) {
+    if (!activityId) {
+      console.error('No activity ID provided');
+      return;
+    }
     const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(activityId)}`;
     const res = await fetch(proxyUrl, {
       headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
     });
+
+    if (!res.ok) {
+      console.error('Failed to fetch activity', res);
+      return;
+    }
+
     const activity = await res.json();
     this.activity = activity;
   }

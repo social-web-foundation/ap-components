@@ -50,6 +50,12 @@ class ActivityPubActivityCollection extends HTMLElement {
     const res = await fetch(proxyUrl, {
       headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
     });
+
+    if (!res.ok) {
+      console.error('Failed to fetch collection', res);
+      return;
+    }
+
     const collection = await res.json();
 
     const activities = [];
@@ -66,6 +72,10 @@ class ActivityPubActivityCollection extends HTMLElement {
         const res = await fetch(proxyNext, {
           headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
         });
+        if (!res.ok) {
+          console.error('Failed to fetch collection page', res);
+          break;
+        }
         const page = await res.json();
         if (page.items) {
           activities.push(...page.items);
@@ -90,8 +100,10 @@ class ActivityPubActivityCollection extends HTMLElement {
       activityListElement.appendChild(activityElement);
       if (typeof activity === 'string') {
         activityElement.setAttribute('activity-id', activity);
-      } else {
+      } else if (typeof activity === 'object') {
         activityElement.setAttribute('activity', JSON.stringify(activity));
+      } else {
+        console.error('Activity is not a string or object', activity);
       }
     });
   }

@@ -81,6 +81,10 @@ class ActivityPubActor extends HTMLElement {
       const res = await fetch(proxyUrl, {
         headers: { Accept: 'application/jrd+json, application/json' }
       });
+      if (!res.ok) {
+        console.error('Failed to fetch webfinger', res);
+        return;
+      }
       const json = await res.json();
       const links = json.links;
       const ap = links.find(link =>
@@ -99,6 +103,10 @@ class ActivityPubActor extends HTMLElement {
       const res = await fetch(proxyUrl, {
         headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
       })
+      if (!res.ok) {
+        console.error('Failed to fetch actor', res);
+        return;
+      }
       const json = await res.json();
 
       const profile = this.shadowRoot.querySelector('.profile');
