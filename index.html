@@ -3,14 +3,27 @@
   <head>
     <title>Account Handler</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="module" src="./activitypub-actor.js"></script>
   </head>
   <body>
-    <h1>Account Handler</h1>
-    <p><a href="javascript:registerAcctHandler()">Register</a></p>
-    <div id="account">
-      <activitypub-actor id="handler" ></activitypub-actor>
-    </div>
-    <script type="module" src="./activitypub-actor.js"></script>
+    <header>
+      <h1>Account Handler</h1>
+      <nav>
+        <ul>
+          <li><a href="javascript:registerAcctHandler()">Register</a></li>
+        </ul>
+        <form action="." method="get">
+          <label for="actor-search">Actor:</label>
+          <input type="search" id="actor-search" name="q" />
+          <button>Show</button>
+        </form>
+      </nav>
+    </header>
+    <main>
+      <section id="account">
+        <activitypub-actor id="handler" ></activitypub-actor>
+      </section>
+    </main>
     <script>
       function registerAcctHandler() {
         const loc = document.location.origin + document.location.pathname;
