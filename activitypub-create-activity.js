@@ -80,6 +80,9 @@ class ActivityPubCreateActivity extends HTMLElement {
   }
 
   set activity(value) {
+    if (typeof value !== 'string') {
+      value = JSON.stringify(value);
+    }
     this.setAttribute('activity', value);
   }
 }

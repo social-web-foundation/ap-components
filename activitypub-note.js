@@ -79,6 +79,25 @@ class ActivityPubNote extends HTMLElement {
     const publishedElement = this.shadowRoot.querySelector('.published');
     publishedElement.textContent = object.published;
   }
+
+  get objectId() {
+    return this.getAttribute('object-id');
+  }
+
+  set objectId(value) {
+    this.setAttribute('object-id', value);
+  }
+
+  get object() {
+    return this.getAttribute('object');
+  }
+
+  set object(value) {
+    if (typeof value !== 'string') {
+      value = JSON.stringify(value);
+    }
+    this.setAttribute('object', value);
+  }
 }
 
 customElements.define('activitypub-note', ActivityPubNote);

@@ -98,13 +98,7 @@ class ActivityPubActivityCollection extends HTMLElement {
       activitiesElement.appendChild(activityListElement);
       const activityElement = document.createElement('activitypub-activity');
       activityListElement.appendChild(activityElement);
-      if (typeof activity === 'string') {
-        activityElement.setAttribute('activity-id', activity);
-      } else if (typeof activity === 'object') {
-        activityElement.setAttribute('activity', JSON.stringify(activity));
-      } else {
-        console.error('Activity is not a string or object', activity);
-      }
+      activityElement.activity = activity;
     });
   }
 
