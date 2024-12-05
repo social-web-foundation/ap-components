@@ -45,7 +45,9 @@ class ActivityPubActivityCollection extends HTMLElement {
       return;
     }
 
-    const res = await fetch(feedId, {
+    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(feedId)}`;
+
+    const res = await fetch(proxyUrl, {
       headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
     });
     const collection = await res.json();
@@ -59,7 +61,8 @@ class ActivityPubActivityCollection extends HTMLElement {
     } else if (collection.first) {
       let next = collection.first;
       while (next && activities.length < MAX_ACTIVITIES) {
-        const res = await fetch(next, {
+        const proxyNext = `https://corsproxy.io/?url=${encodeURIComponent(next)}`;
+        const res = await fetch(proxyNext, {
           headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
         });
         const page = await res.json();

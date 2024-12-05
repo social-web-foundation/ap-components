@@ -75,9 +75,10 @@ class ActivityPubActor extends HTMLElement {
     const parts = address.split("@");
     const domain = parts[1];
     const webfingerUrl = `https://${domain}/.well-known/webfinger?resource=acct:${address}`;
+    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(webfingerUrl)}`;
 
     try {
-      const res = await fetch(webfingerUrl, {
+      const res = await fetch(proxyUrl, {
         headers: { Accept: 'application/jrd+json, application/json' }
       });
       const json = await res.json();
@@ -93,8 +94,9 @@ class ActivityPubActor extends HTMLElement {
   }
 
   async updateActorId(id) {
+    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(id)}`;
     try {
-      const res = await fetch(id, {
+      const res = await fetch(proxyUrl, {
         headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
       })
       const json = await res.json();

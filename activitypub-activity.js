@@ -38,7 +38,8 @@ class ActivityPubActivity extends HTMLElement {
   }
 
   async updateActivityId(activityId) {
-    const res = await fetch(activityId, {
+    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(activityId)}`;
+    const res = await fetch(proxyUrl, {
       headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
     });
     const activity = await res.json();
