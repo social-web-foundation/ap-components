@@ -39,21 +39,21 @@ class ActivityPubActor extends HTMLElement {
           <activitypub-actor-profile class="profile">
           </activitypub-actor-profile>
         </div>
-        <div class="feed-selector">
-          <ul>
+        <nav class="feed-selector">
+          <menu>
             <li>
-              <a href="javascript:void(0)" class="outbox menu selected">Outbox</a>
+              <button class="outbox active">Outbox</button>
             </li>
             <li>
-              <a href="javascript:void(0)" class="following menu">Following</a>
+              <button class="following">Following</button>
             </li>
             <li>
-              <a href="javascript:void(0)" class="followers menu">Followers</a></li>
+              <button class="followers">Followers</button>
             <li>
-              <a href="javascript:void(0)" class="liked menu">Liked</a>
+              <button class="liked">Liked</button>
             </li>
-          </ul>
-        </div>
+          </menu>
+        </nav>
         <div class="feed">
           <activitypub-activity-collection class="outbox-feed">
           </activitypub-activity-collection>
