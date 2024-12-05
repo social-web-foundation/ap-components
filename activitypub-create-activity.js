@@ -42,6 +42,13 @@ class ActivityPubCreateActivity extends HTMLElement {
       activity = JSON.parse(activity);
     }
 
+    // Clear the element
+
+    const createActivityElement = this.shadowRoot.querySelector('.create-activity');
+    createActivityElement.innerHTML = '';
+
+    // Get the object
+
     const object = activity.object;
 
     if (typeof object === 'string') {
@@ -71,7 +78,6 @@ class ActivityPubCreateActivity extends HTMLElement {
 
     const objectElement = document.createElement(objectElementType);
     objectElement.object = object;
-    const createActivityElement = this.shadowRoot.querySelector('.create-activity');
     createActivityElement.appendChild(objectElement);
   }
 
