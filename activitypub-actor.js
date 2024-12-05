@@ -35,7 +35,10 @@ class ActivityPubActor extends HTMLElement {
         }
       </style>
       <div class="actor">
-        <activitypub-actor-profile class="profile" />
+        <div class="actor-profile">
+          <activitypub-actor-profile class="profile">
+          </activitypub-actor-profile>
+        </div>
         <div class="feed-selector">
           <ul>
             <li>
@@ -52,7 +55,8 @@ class ActivityPubActor extends HTMLElement {
           </ul>
         </div>
         <div class="feed">
-          <activitypub-activity-collection class="outbox-feed" />
+          <activitypub-activity-collection class="outbox-feed">
+          </activitypub-activity-collection>
         </div>
       </div>
       `;
