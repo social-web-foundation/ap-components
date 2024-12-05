@@ -1,3 +1,4 @@
+import './activitypub-create-activity.js';
 class ActivityPubActivity extends HTMLElement {
   static get observedAttributes() {
     return [
@@ -66,7 +67,15 @@ class ActivityPubActivity extends HTMLElement {
       activity = JSON.parse(activity);
     }
     const activityElement = this.shadowRoot.querySelector('.activity');
-    activityElement.textContent = activity.type;
+    switch (activity.type) {
+      case 'Create':
+        const createActivity = document.createElement('activitypub-create-activity');
+        createActivity.activity = activity;
+        activityElement.appendChild(createActivity);
+        break;
+      default:
+        activityElement.textContent = activity.type;
+    }
   }
 
   get activity() {
