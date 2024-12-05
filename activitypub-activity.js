@@ -62,8 +62,9 @@ class ActivityPubActivity extends HTMLElement {
   }
 
   updateActivity(activity) {
+    console.log(activity);
     const activityElement = this.shadowRoot.querySelector('.activity');
-    activityElement.textContent = `${activity.type}`;
+    activityElement.textContent = activity.type;
   }
 
   get activity() {
