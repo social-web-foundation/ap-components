@@ -1,5 +1,5 @@
 
-import './activitypub-activity.js';
+import './ap-activity.js';
 
 class ActivityPubActivityCollection extends HTMLElement {
 
@@ -96,7 +96,7 @@ class ActivityPubActivityCollection extends HTMLElement {
     activities.forEach(activity => {
       const activityListElement = document.createElement('li');
       activitiesElement.appendChild(activityListElement);
-      const activityElement = document.createElement('activitypub-activity');
+      const activityElement = document.createElement('ap-activity');
       activityListElement.appendChild(activityElement);
       activityElement.activity = activity;
     });
@@ -111,4 +111,4 @@ class ActivityPubActivityCollection extends HTMLElement {
   }
 }
 
-customElements.define('activitypub-activity-collection', ActivityPubActivityCollection);
+customElements.define('ap-activity-collection', ActivityPubActivityCollection);

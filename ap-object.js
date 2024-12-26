@@ -113,4 +113,4 @@ class ActivityPubObject extends HTMLElement {
   }
 }
 
-customElements.define('activitypub-object', ActivityPubObject);
+customElements.define('ap-object', ActivityPubObject);

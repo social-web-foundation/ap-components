@@ -1,8 +1,8 @@
-// Usage: <activitypub-actor webfinger="webfinger:example@domain"></activitypub-actor>
+// Usage: <ap-actor webfinger="webfinger:example@domain"></ap-actor>
 // Description: Fetches the actor object from the given webfinger and displays the name, summary, and url of the actor.
 
-import './activitypub-actor-profile.js';
-import './activitypub-activity-collection.js';
+import './ap-actor-profile.js';
+import './ap-activity-collection.js';
 
 const AS2_NS = 'https://www.w3.org/ns/activitystreams#';
 const AS2_PREFIX = 'as:';
@@ -36,8 +36,8 @@ class ActivityPubActor extends HTMLElement {
       </style>
       <div class="actor">
         <div class="actor-profile">
-          <activitypub-actor-profile class="profile">
-          </activitypub-actor-profile>
+          <ap-actor-profile class="profile">
+          </ap-actor-profile>
         </div>
         <nav class="feed-selector">
           <menu>
@@ -56,8 +56,8 @@ class ActivityPubActor extends HTMLElement {
           </menu>
         </nav>
         <div class="feed">
-          <activitypub-activity-collection class="outbox-feed">
-          </activitypub-activity-collection>
+          <ap-activity-collection class="outbox-feed">
+          </ap-activity-collection>
         </div>
       </div>
       `;
@@ -182,4 +182,4 @@ class ActivityPubActor extends HTMLElement {
 }
 
 // Define the custom element
-customElements.define('activitypub-actor', ActivityPubActor);
+customElements.define('ap-actor', ActivityPubActor);

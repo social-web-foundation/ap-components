@@ -100,4 +100,4 @@ class ActivityPubNote extends HTMLElement {
   }
 }
 
-customElements.define('activitypub-note', ActivityPubNote);
+customElements.define('ap-note', ActivityPubNote);

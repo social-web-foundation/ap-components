@@ -109,4 +109,4 @@ class ActivityPubArticle extends HTMLElement {
   }
 }
 
-customElements.define('activitypub-article', ActivityPubArticle);
+customElements.define('ap-article', ActivityPubArticle);

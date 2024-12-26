@@ -1,4 +1,4 @@
-import './activitypub-create-activity.js';
+import './ap-create-activity.js';
 class ActivityPubActivity extends HTMLElement {
   static get observedAttributes() {
     return [
@@ -69,7 +69,7 @@ class ActivityPubActivity extends HTMLElement {
     const activityElement = this.shadowRoot.querySelector('.activity');
     switch (activity.type) {
       case 'Create':
-        const createActivity = document.createElement('activitypub-create-activity');
+        const createActivity = document.createElement('ap-create-activity');
         createActivity.activity = activity;
         activityElement.appendChild(createActivity);
         break;
@@ -98,4 +98,4 @@ class ActivityPubActivity extends HTMLElement {
   }
 }
 
-customElements.define('activitypub-activity', ActivityPubActivity);
+customElements.define('ap-activity', ActivityPubActivity);

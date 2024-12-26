@@ -1,6 +1,6 @@
-import './activitypub-object.js';
-import './activitypub-note.js';
-import './activitypub-article.js';
+import './ap-object.js';
+import './ap-note.js';
+import './ap-article.js';
 
 class ActivityPubCreateActivity extends HTMLElement {
   static get observedAttributes() {
@@ -67,13 +67,13 @@ class ActivityPubCreateActivity extends HTMLElement {
 
     switch (object.type) {
       case 'Note':
-        objectElementType = 'activitypub-note';
+        objectElementType = 'ap-note';
         break;
       case 'Article':
-        objectElementType = 'activitypub-article';
+        objectElementType = 'ap-article';
         break;
       default:
-        objectElementType = 'activitypub-object';
+        objectElementType = 'ap-object';
     }
 
     const objectElement = document.createElement(objectElementType);
@@ -93,4 +93,4 @@ class ActivityPubCreateActivity extends HTMLElement {
   }
 }
 
-customElements.define('activitypub-create-activity', ActivityPubCreateActivity);
+customElements.define('ap-create-activity', ActivityPubCreateActivity);

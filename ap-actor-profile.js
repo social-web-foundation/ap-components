@@ -85,4 +85,4 @@ class ActivityPubActorProfile extends HTMLElement {
 }
 
 // Define the custom element
-customElements.define('activitypub-actor-profile', ActivityPubActorProfile);
+customElements.define('ap-actor-profile', ActivityPubActorProfile);
