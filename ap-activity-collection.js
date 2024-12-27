@@ -18,12 +18,6 @@ class ActivityPubActivityCollection extends ActivityPubElement {
   :host {
     display: block;
   }
-  .activity {
-      border: 1px solid lightgray;
-      border-radius: 8px;
-      padding: 8px;
-      margin: 8px 0;
-  }
   `;
 
   constructor() {
@@ -36,8 +30,8 @@ class ActivityPubActivityCollection extends ActivityPubElement {
       ${this._activities?.map(activity => html`
         <li class="activity">
         ${(typeof activity === 'string')
-        ? html`<ap-activity activity-id="${activity}"></ap-activity>`
-        : html`<ap-activity activity="${JSON.stringify(activity)}"></ap-activity>`}
+        ? html`<ap-activity object-id="${activity}"></ap-activity>`
+        : html`<ap-activity json="${JSON.stringify(activity)}"></ap-activity>`}
         </li>
         `)}
       </ol>
