@@ -76,7 +76,11 @@ class ActivityPubActor extends ActivityPubElement {
           ${['outbox', 'following', 'followers', 'liked'].map(
             feed => html`
             <li>
-              <button class="${feed}">${feed[0].toUpperCase() + feed.slice(1)}</button>
+              <button
+                @click="${() => this._feed = feed}"
+                class="${feed} ${this._feed === feed ? 'selected' : ''}">
+                ${feed[0].toUpperCase() + feed.slice(1)}
+              </button>
             </li>
             `)}
           </menu>

@@ -1,76 +1,69 @@
 
+import { ActivityPubElement } from './ap-element.js';
+import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
 import './ap-activity.js';
 
-class ActivityPubActivityCollection extends HTMLElement {
+class ActivityPubActivityCollection extends ActivityPubElement {
+
+  static get properties() {
+    return {
+      ...super.properties,
+      _activities: { type: Array, state: true },
+    }
+  }
 
   static MAX_ACTIVITIES = 20;
 
-  static get observedAttributes() {
-    return ['feed-id'];
+  static styles = css`
+  :host {
+    display: block;
   }
+  .activity {
+      border: 1px solid lightgray;
+      border-radius: 8px;
+      padding: 8px;
+      margin: 8px 0;
+  }
+  `;
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `
-        <style>
-            :host {
-                display: block;
-            }
-            .activity {
-                border: 1px solid lightgray;
-                border-radius: 8px;
-                padding: 8px;
-                margin: 8px 0;
-            }
-        </style>
-        <ol class="activities"></ol>
+  }
+
+  render() {
+    return html`
+      <ol class="activities">
+      ${this._activities?.map(activity => html`
+        <li class="activity">
+        ${(typeof activity === 'string')
+        ? html`<ap-activity activity-id="${activity}"></ap-activity>`
+        : html`<ap-activity activity="${JSON.stringify(activity)}"></ap-activity>`}
+        </li>
+        `)}
+      </ol>
     `;
   }
 
-  connectedCallback() {
-    if (this.hasAttribute('feed-id')) {
-      this.updateFeedId(this.feedId);
+  updated(changedProperties) {
+    super.updated(changedProperties);
+    if (changedProperties.has('json')) {
+      this.fetchActivities();
     }
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'feed-id') {
-      this.updateFeedId(newValue);
-    }
-  }
-
-  async updateFeedId(feedId) {
-    if (!feedId) {
-      return;
-    }
-
-    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(feedId)}`;
-
-    const res = await fetch(proxyUrl, {
-      headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
-    });
-
-    if (!res.ok) {
-      console.error('Failed to fetch collection', res);
-      return;
-    }
-
-    const collection = await res.json();
-
+  async fetchActivities() {
     const activities = [];
 
-    if (collection.items) {
-      activities.push(...collection.items);
-    } else if (collection.orderedItems) {
-      activities.push(...collection.orderedItems);
-    } else if (collection.first) {
-      let next = collection.first;
+    if (this.json.items) {
+      activities.push(...this.json.items);
+    } else if (this.json.orderedItems) {
+      activities.push(...this.json.orderedItems);
+    } else if (this.json.first) {
+      let next = this.json.first;
       while (next &&
-        activities.length < ActivityPubActivityCollection.MAX_ACTIVITIES) {
-        const proxyNext = `https://corsproxy.io/?url=${encodeURIComponent(next)}`;
-        const res = await fetch(proxyNext, {
-          headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
+        activities.length < this.constructor.MAX_ACTIVITIES) {
+        const res = await this.constructor.fetchFunction(next, {
+          headers: { Accept: this.constructor.MEDIA_TYPES.join(', ') }
         });
         if (!res.ok) {
           console.error('Failed to fetch collection page', res);
@@ -81,33 +74,12 @@ class ActivityPubActivityCollection extends HTMLElement {
           activities.push(...page.items);
         } else if (page.orderedItems) {
           activities.push(...page.orderedItems);
-        } else {
-          console.error('Collection page does not have items or orderedItems property');
         }
         next = page.next;
       }
-    } else {
-      console.error('Collection does not have items or first property');
     }
 
-    const activitiesElement = this.shadowRoot.querySelector('.activities');
-    activitiesElement.innerHTML = '';
-
-    activities.forEach(activity => {
-      const activityListElement = document.createElement('li');
-      activitiesElement.appendChild(activityListElement);
-      const activityElement = document.createElement('ap-activity');
-      activityListElement.appendChild(activityElement);
-      activityElement.activity = activity;
-    });
-  }
-
-  get feedId() {
-    return this.getAttribute('feed-id');
-  }
-
-  set feedId(value) {
-    this.setAttribute('feed-id', value);
+    this._activities = activities;
   }
 }
 
