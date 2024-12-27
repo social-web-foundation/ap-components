@@ -25,7 +25,20 @@ class ActivityPubActivityCollection extends ActivityPubElement {
   }
 
   render() {
-    return html`
+    if (this._error) {
+      return html`
+      <div class="activities">
+        <p>${this._error}</p>
+      </div>
+    `;
+    } else if (!this.json) {
+      return html`
+      <div class="activities">
+        <p>Loading...</p>
+      </div>
+    `;
+    } else {
+      return html`
       <ol class="activities">
       ${this._activities?.map(activity => html`
         <li class="activity">
@@ -35,7 +48,8 @@ class ActivityPubActivityCollection extends ActivityPubElement {
         </li>
         `)}
       </ol>
-    `;
+      `;
+    }
   }
 
   updated(changedProperties) {
