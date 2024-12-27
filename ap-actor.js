@@ -5,15 +5,7 @@ import { LitElement, html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/co
 import { ActivityPubElement } from './ap-element.js';
 import './ap-actor-profile.js';
 import './ap-activity-collection.js';
-
-const AS2_NS = 'https://www.w3.org/ns/activitystreams#';
-const AS2_PREFIX = 'as:';
-
-function asMatch(obj, type) {
-  return obj.type === type ||
-    obj.type === `${AS2_PREFIX}${type}` ||
-    obj.type === `${AS2_NS}${type}`;
-}
+import './ap-actor-collection.js';
 
 class ActivityPubActor extends ActivityPubElement {
 
@@ -140,32 +132,6 @@ class ActivityPubActor extends ActivityPubElement {
       throw new Error('No ActivityPub link found in webfinger response');
     }
     this.objectId = ap.href;
-  }
-
-  get icon() {
-    if (!this.json) {
-      return null;
-    };
-    if (this.json.icon) {
-      if (typeof this.json.icon === 'string') {
-        return this.json.icon;
-      } else {
-        let iconObj;
-        if (Array.isArray(this.json.icon)) {
-          // TODO: pick best fit
-          iconObj = this.json.icon[0];
-        } else if (typeof this.json.icon === 'object') {
-          iconObj = this.json.icon;
-        }
-        if (iconObj) {
-          if (asMatch(iconObj, 'Image')) {
-            return iconObj.url;
-          } else if (asMatch(iconObj, 'Link')) {
-            return icon.href;
-          }
-        }
-      }
-    }
   }
 
   get outbox() {

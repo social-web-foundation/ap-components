@@ -1,18 +1,18 @@
 
 import { ActivityPubElement } from './ap-element.js';
 import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
-import './ap-activity.js';
+import './ap-actor-item.js';
 
-class ActivityPubActivityCollection extends ActivityPubElement {
+class ActivityPubActorCollection extends ActivityPubElement {
 
   static get properties() {
     return {
       ...super.properties,
-      _activities: { type: Array, state: true },
+      _actors: { type: Array, state: true },
     }
   }
 
-  static MAX_ACTIVITIES = 20;
+  static MAX_ACTORS = 20;
 
   static styles = css`
   :host {
@@ -27,24 +27,24 @@ class ActivityPubActivityCollection extends ActivityPubElement {
   render() {
     if (this._error) {
       return html`
-      <div class="activities">
+      <div class="actors">
         <p>${this._error}</p>
       </div>
     `;
     } else if (!this.json) {
       return html`
-      <div class="activities">
+      <div class="actors">
         <p>Loading...</p>
       </div>
     `;
     } else {
       return html`
-        <ol class="activities">
-        ${this._activities?.map(activity => html`
-          <li class="activity">
-          ${(typeof activity === 'string')
-          ? html`<ap-activity object-id="${activity}"></ap-activity>`
-          : html`<ap-activity json="${JSON.stringify(activity)}"></ap-activity>`}
+        <ol class="actors">
+        ${this._actors?.map(actor => html`
+          <li class="actor">
+          ${(typeof actor === 'string')
+          ? html`<ap-actor-item object-id="${actor}"></ap-actor-item>`
+          : html`<ap-actor-item json="${JSON.stringify(actor)}"></ap-actor-item>`}
           </li>
           `)}
         </ol>
@@ -55,21 +55,21 @@ class ActivityPubActivityCollection extends ActivityPubElement {
   updated(changedProperties) {
     super.updated(changedProperties);
     if (changedProperties.has('json')) {
-      this.fetchActivities();
+      this.fetchActors();
     }
   }
 
-  async fetchActivities() {
-    const activities = [];
+  async fetchActors() {
+    const actors = [];
 
     if (this.json.items) {
-      activities.push(...this.json.items);
+      actors.push(...this.json.items);
     } else if (this.json.orderedItems) {
-      activities.push(...this.json.orderedItems);
+      actors.push(...this.json.orderedItems);
     } else if (this.json.first) {
       let next = this.json.first;
       while (next &&
-        activities.length < this.constructor.MAX_ACTIVITIES) {
+        actors.length < this.constructor.MAX_ACTORS) {
         const res = await this.constructor.fetchFunction(next, {
           headers: { Accept: this.constructor.MEDIA_TYPES.join(', ') }
         });
@@ -79,16 +79,16 @@ class ActivityPubActivityCollection extends ActivityPubElement {
         }
         const page = await res.json();
         if (page.items) {
-          activities.push(...page.items);
+          actors.push(...page.items);
         } else if (page.orderedItems) {
-          activities.push(...page.orderedItems);
+          actors.push(...page.orderedItems);
         }
         next = page.next;
       }
     }
 
-    this._activities = activities;
+    this._actors = actors;
   }
 }
 
-customElements.define('ap-activity-collection', ActivityPubActivityCollection);
+customElements.define('ap-actor-collection', ActivityPubActorCollection);
