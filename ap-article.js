@@ -1,4 +1,5 @@
-import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
+import { html, css, unsafeHTML } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit-all.min.js';
+import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.2.3/+esm';
 import { ActivityPubElement } from './ap-element.js';
 
 class ActivityPubArticle extends ActivityPubElement {
@@ -36,7 +37,7 @@ class ActivityPubArticle extends ActivityPubElement {
       return html`
         <div class="object article">
         <h3 class="name">${this.name}</h3>
-        <p class="summary">${this.summary}</p>
+        <p class="summary">${unsafeHTML(DOMPurify.sanitize(this.summary))}</p>
         <p class="url">
           <a class="url-link" href="${this.url}">${this.url}</a>
         </p>
