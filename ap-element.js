@@ -51,7 +51,11 @@ export class ActivityPubElement extends LitElement {
       const fn = this.constructor.fetchFunction;
       const headers = { Accept: this.constructor.MEDIA_TYPES.join(', ') };
       const response = await fn(this.objectId, { headers });
-      this.json = await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      }
+      const json = await response.json();
+      this.json = json;
     } catch (error) {
       this._error = error.message;
     }
