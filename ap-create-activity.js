@@ -33,10 +33,10 @@ class ActivityPubCreateActivity extends ActivityPubElement {
       return html`
         <div class="create-activity">
         ${(this.json?.object?.type === 'Note')
-          ? html`<ap-note object="${JSON.stringify(this.json.object)}"></ap-note>`
+        ? html`<ap-note json="${JSON.stringify(this.json.object)}"></ap-note>`
           : (this.json?.object?.type === 'Article')
-            ? html`<ap-article object="${JSON.stringify(this.json.object)}"></ap-article>`
-            : html`<ap-object object="${JSON.stringify(this.json.object)}"></ap-object>`
+          ? html`<ap-article json="${JSON.stringify(this.json.object)}"></ap-article>`
+          : html`<ap-object json="${JSON.stringify(this.json.object)}"></ap-object>`
         }
         </div>
       `;
