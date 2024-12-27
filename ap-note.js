@@ -1,102 +1,50 @@
-class ActivityPubNote extends HTMLElement {
-  static get observedAttributes() {
-    return [
-      'object-id',
-      'object'
-    ];
-  }
+import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
+import { ActivityPubElement } from './ap-element.js';
+
+class ActivityPubNote extends ActivityPubElement {
+
+  static styles = css`
+    :host {
+      display: block;
+    }
+    .object {
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        padding: 8px;
+        margin: 8px 0;
+    }
+    `;
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `
-        <style>
-            :host {
-                display: block;
-            }
-            .object {
-                border: 1px solid lightgray;
-                border-radius: 8px;
-                padding: 8px;
-                margin: 8px 0;
-            }
-        </style>
-        <div class="note">
-        <div class="content"></div>
-        <p class="published"></p>
+  }
+
+  render() {
+
+    if (this._error) {
+      return html`
+      <div class="object">
+        <p class="error">${this._error}</p>
+      </div>
+      `
+    } else if (!this.json) {
+      return html`
+      <div class="object">
+        <p>Loading...</p>
+      </div>
+      `
+    } else {
+      return html`
+        <div class="object note">
+          <div class="content">${this.content}</div>
+          <p class="published">
+            <a class="url" href="${this.url}">
+              ${this.published}
+            </a>
+          </p>
         </div>
     `;
-  }
-
-  connectedCallback() {
-    if (this.hasAttribute('object-id')) {
-      this.updateObjectId(this.objectId);
     }
-    if (this.hasAttribute('object')) {
-      this.updateObject(this.object);
-    }
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'object') {
-      this.updateObject(newValue);
-    } else if (name === 'object-id') {
-      this.updateObjectId(newValue);
-    }
-  }
-
-  async updateObjectId(objectId) {
-    if (!objectId) {
-      console.error('No object ID provided');
-      return;
-    }
-    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(objectId)}`;
-    const res = await fetch(proxyUrl, {
-      headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
-    });
-
-    if (!res.ok) {
-      console.error('Failed to fetch object', res);
-      return;
-    }
-
-    const object = await res.json();
-    this.object = object;
-  }
-
-  async updateObject(object) {
-    if (!object) {
-      console.error('No object provided');
-      return;
-    }
-    if (typeof object == 'string') {
-      object = JSON.parse(object);
-    }
-
-    const contentElement = this.shadowRoot.querySelector('.content');
-    contentElement.innerHTML = object.content;
-
-    const publishedElement = this.shadowRoot.querySelector('.published');
-    publishedElement.textContent = object.published;
-  }
-
-  get objectId() {
-    return this.getAttribute('object-id');
-  }
-
-  set objectId(value) {
-    this.setAttribute('object-id', value);
-  }
-
-  get object() {
-    return this.getAttribute('object');
-  }
-
-  set object(value) {
-    if (typeof value !== 'string') {
-      value = JSON.stringify(value);
-    }
-    this.setAttribute('object', value);
   }
 }
 

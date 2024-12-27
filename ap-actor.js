@@ -168,18 +168,6 @@ class ActivityPubActor extends ActivityPubElement {
     }
   }
 
-  get name() {
-    return this.json?.name;
-  }
-
-  get summary() {
-    return this.json?.summary;
-  }
-
-  get url() {
-    return this.json?.url;
-  }
-
   get outbox() {
     return this.json?.outbox;
   }

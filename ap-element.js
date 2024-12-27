@@ -47,4 +47,24 @@ export class ActivityPubElement extends LitElement {
       this._error = error.message;
     }
   }
+
+  get name() {
+    return this.json?.name;
+  }
+
+  get summary() {
+    return this.json?.summary;
+  }
+
+  get content() {
+    return this.json?.content;
+  }
+
+  get url() {
+    return this.json?.url;
+  }
+
+  get published() {
+    return this.json?.published;
+  }
 }
