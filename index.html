@@ -3,7 +3,6 @@
   <head>
     <title>Account Handler</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script type="module" src="./ap-actor.js"></script>
   </head>
   <body>
     <header>
@@ -21,15 +20,16 @@
     </header>
     <main>
       <section id="account">
-        <ap-actor id="handler" ></ap-actor>
       </section>
     </main>
-    <script>
+    <script type="module">
+      import { ActivityPubElement } from "./ap-element.js";
+      import './ap-actor.js';
+
       function registerAcctHandler() {
         const loc = document.location.origin + document.location.pathname;
         console.log("Registering protocol handler");
         const handler = `${loc}?q=%s`
-        console.log(handler)
         navigator.registerProtocolHandler(
           "web+acct",
           handler
@@ -38,12 +38,19 @@
 
       window.onload = () => {
 
+        ActivityPubElement.fetchFunction =
+          async (url, options) =>
+            fetch(
+              `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+              options
+            );
+
         const address = new URLSearchParams(document.location.search).get("q");
 
         if (address && address.startsWith("web+acct:")) {
           const acct = address.slice(4) // take off the web+ part
-          const handler = document.getElementById("handler")
-          handler.webfinger = acct
+          const account = document.getElementById("account")
+          account.innerHTML = `<ap-actor webfinger="${acct}"></ap-actor>`
         }
       }
     </script>
