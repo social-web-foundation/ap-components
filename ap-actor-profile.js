@@ -2,7 +2,7 @@ import { html, css, LitElement, unsafeHTML } from 'https://cdn.jsdelivr.net/gh/l
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.2.3/+esm';
 import './avatar-icon.js';
 
-class ActivityPubActorProfile extends LitElement {
+export class ActivityPubActorProfile extends LitElement {
   static get properties() {
     return {
       'name': { type: String },

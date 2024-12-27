@@ -4,7 +4,7 @@ import './ap-object.js';
 import './ap-note.js';
 import './ap-article.js';
 
-class ActivityPubCreateActivity extends ActivityPubElement {
+export class ActivityPubCreateActivity extends ActivityPubElement {
 
   constructor() {
     super();

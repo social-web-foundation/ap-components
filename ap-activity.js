@@ -2,7 +2,7 @@ import { ActivityPubElement } from './ap-element.js';
 import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
 import './ap-create-activity.js';
 
-class ActivityPubActivity extends ActivityPubElement {
+export class ActivityPubActivity extends ActivityPubElement {
 
   constructor() {
     super();

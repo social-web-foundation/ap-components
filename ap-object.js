@@ -1,7 +1,7 @@
 import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
 import { ActivityPubElement } from './ap-element.js';
 
-class ActivityPubObject extends ActivityPubElement {
+export class ActivityPubObject extends ActivityPubElement {
 
   static styles = css`
   :host {

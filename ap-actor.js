@@ -7,7 +7,7 @@ import './ap-actor-profile.js';
 import './ap-activity-collection.js';
 import './ap-actor-collection.js';
 
-class ActivityPubActor extends ActivityPubElement {
+export class ActivityPubActor extends ActivityPubElement {
 
   static get properties() {
     return {

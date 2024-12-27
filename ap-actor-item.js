@@ -2,7 +2,7 @@ import { ActivityPubElement } from './ap-element.js';
 import { html, css, unsafeHTML } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/all/lit-all.min.js';
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.2.3/+esm';
 
-class ActivityPubActorItem extends ActivityPubElement {
+export class ActivityPubActorItem extends ActivityPubElement {
 
   static styles = css`
     :host {
