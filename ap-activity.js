@@ -38,7 +38,7 @@ class ActivityPubActivity extends ActivityPubElement {
         case 'Create':
           return html`
           <div class="activity">
-            <ap-create-activity activity="${JSON.stringify(this.json)}"></ap-create-activity>
+            <ap-create-activity json="${JSON.stringify(this.json)}"></ap-create-activity>
           </div>
         `;
         default:

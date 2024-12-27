@@ -1,95 +1,46 @@
+import { ActivityPubElement } from './ap-element.js';
+import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
 import './ap-object.js';
 import './ap-note.js';
 import './ap-article.js';
 
-class ActivityPubCreateActivity extends HTMLElement {
-  static get observedAttributes() {
-    return ['activity'];
-  }
+class ActivityPubCreateActivity extends ActivityPubElement {
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `
-      <style>
-        .create-activity {
-          display: block;
-        }
-      </style>
+  }
+
+  static styles = css`
+  .create-activity {
+    display: block;
+  }
+  `
+
+  render() {
+    if (this._error) {
+      return html`
       <div class="create-activity">
+        <p>${this._error}</p>
       </div>
     `;
-  }
-
-  connectedCallback() {
-    if (this.hasAttribute('activity')) {
-      this.updateActivity(this.activity);
+    } else if (!this.json) {
+      return html`
+      <div class="create-activity">
+        <p>Loading...</p>
+      </div>
+    `;
+    } else {
+      return html`
+        <div class="create-activity">
+        ${(this.json?.object?.type === 'Note')
+          ? html`<ap-note object="${JSON.stringify(this.json.object)}"></ap-note>`
+          : (this.json?.object?.type === 'Article')
+            ? html`<ap-article object="${JSON.stringify(this.json.object)}"></ap-article>`
+            : html`<ap-object object="${JSON.stringify(this.json.object)}"></ap-object>`
+        }
+        </div>
+      `;
     }
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (name === 'activity') {
-      this.updateActivity(newValue);
-    }
-  }
-
-  async updateActivity(activity) {
-    if (!activity) {
-      console.error('No activity provided');
-      return;
-    }
-    if (typeof activity == 'string') {
-      activity = JSON.parse(activity);
-    }
-
-    // Clear the element
-
-    const createActivityElement = this.shadowRoot.querySelector('.create-activity');
-    createActivityElement.innerHTML = '';
-
-    // Get the object
-
-    const object = activity.object;
-
-    if (typeof object === 'string') {
-      const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(object)}`;
-      const res = fetch(proxyUrl, {
-        headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
-      })
-      if (!res.ok) {
-        console.error('Failed to fetch object', res);
-        return;
-      }
-      object = await res.json();
-    }
-
-    let objectElementType;
-
-    switch (object.type) {
-      case 'Note':
-        objectElementType = 'ap-note';
-        break;
-      case 'Article':
-        objectElementType = 'ap-article';
-        break;
-      default:
-        objectElementType = 'ap-object';
-    }
-
-    const objectElement = document.createElement(objectElementType);
-    objectElement.object = object;
-    createActivityElement.appendChild(objectElement);
-  }
-
-  get activity() {
-    return this.getAttribute('activity');
-  }
-
-  set activity(value) {
-    if (typeof value !== 'string') {
-      value = JSON.stringify(value);
-    }
-    this.setAttribute('activity', value);
   }
 }
 
