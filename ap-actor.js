@@ -1,6 +1,8 @@
 // Usage: <ap-actor webfinger="webfinger:example@domain"></ap-actor>
 // Description: Fetches the actor object from the given webfinger and displays the name, summary, and url of the actor.
 
+import { LitElement, html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
+import { ActivityPubElement } from './ap-element.js';
 import './ap-actor-profile.js';
 import './ap-activity-collection.js';
 
@@ -13,171 +15,181 @@ function asMatch(obj, type) {
     obj.type === `${AS2_NS}${type}`;
 }
 
-class ActivityPubActor extends HTMLElement {
-  static get observedAttributes() {
-    return [
-      'webfinger',
-      'actor-id'
-    ];
+class ActivityPubActor extends ActivityPubElement {
+
+  static get properties() {
+    return {
+      ...super.properties,
+      webfinger: { type: String },
+      _feed: { type: String, state: true },
+    }
   }
+
+  static styles = css`
+  .actor {
+    display: block;
+  }
+  .feed-selector, .feed {
+    display: block;
+    visibility: visible;
+  }
+  `;
 
   constructor() {
     super();
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot.innerHTML = `
+    this._feed = 'outbox';
+  }
+
+  render() {
+    if (this._error) {
+      return html`
       <style>
-        .actor {
-          display: block;
-        }
-        .feed-selector, .feed {
-          display: block;
-          visibility: visible;
-        }
+      </style>
+      <div class="actor">
+        <p>${this._error}</p>
+      </div>
+    `;
+    } else if (!this.json) {
+      return html`
+      <style>
+      </style>
+      <div class="actor">
+        <p>Loading...</p>
+      </div>
+    `;
+    } else {
+      return html`
+      <style>
       </style>
       <div class="actor">
         <div class="actor-profile">
-          <ap-actor-profile class="profile">
+          <ap-actor-profile class="profile"
+            webfinger="${this.webfinger}"
+            name="${this.name}"
+            summary="${this.summary}"
+            url="${this.url}"
+            icon="${this.icon}">
           </ap-actor-profile>
         </div>
         <nav class="feed-selector">
           <menu>
+          ${['outbox', 'following', 'followers', 'liked'].map(
+            feed => html`
             <li>
-              <button class="outbox active">Outbox</button>
+              <button class="${feed}">${feed[0].toUpperCase() + feed.slice(1)}</button>
             </li>
-            <li>
-              <button class="following">Following</button>
-            </li>
-            <li>
-              <button class="followers">Followers</button>
-            </li>
-            <li>
-              <button class="liked">Liked</button>
-            </li>
+            `)}
           </menu>
         </nav>
         <div class="feed">
-          <ap-activity-collection class="outbox-feed">
-          </ap-activity-collection>
+          ${(this._feed === 'outbox')
+          ? html`<ap-activity-collection class="outbox-feed" object-id="${this.outbox}"></ap-activity-collection>`
+          : (this._feed === 'following')
+            ? html`<ap-actor-collection class="following-feed" object-id="${this.following}"></ap-actor-collection>`
+            : (this._feed === 'followers')
+              ? html`<ap-actor-collection class="followers-feed" object-id="${this.followers}"></ap-actor-collection>`
+              : (this._feed === 'liked')
+                ? html`<ap-object-collection class="liked-feed" object-id="${this.liked}"></ap-object-collection>`
+                : html`<p>Unknown feed: ${this._feed}</p>`
+            }
         </div>
       </div>
       `;
+    }
   }
 
   connectedCallback() {
-    if (this.hasAttribute('webfinger')) {
-      this.updateWebfinger(this.webfinger);
+    if (!this.objectId && !this.json) {
+      if (!this.webfinger) {
+        this._error = 'No object ID or Webfinger provided';
+      } else {
+        this.fetchObjectId()
+          .then(() => super.connectedCallback())
+          .catch(err => { this._error = err.message; });
+      }
+    } else {
+      super.connectedCallback();
     }
   }
 
-  attributeChangedCallback(name, oldValue, newValue) {
-    switch (name) {
-      case 'webfinger':
-        this.updateWebfinger(newValue);
-        break;
-      case 'actor-id':
-        this.updateActorId(newValue);
-    }
-  }
+  async fetchObjectId() {
 
-  async updateWebfinger(webfinger) {
-
-    const [protocol, address] = webfinger.split(':');
-
-    const profile = this.shadowRoot.querySelector('.profile');
-    profile.webfinger = address;
+    const [protocol, address] = this.webfinger.split(':');
 
     const parts = address.split("@");
     const domain = parts[1];
     const webfingerUrl = `https://${domain}/.well-known/webfinger?resource=acct:${address}`;
-    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(webfingerUrl)}`;
+    const headers = { Accept: 'application/jrd+json, application/json' };
 
-    try {
-      const res = await fetch(proxyUrl, {
-        headers: { Accept: 'application/jrd+json, application/json' }
-      });
-      if (!res.ok) {
-        console.error('Failed to fetch webfinger', res);
-        return;
-      }
-      const json = await res.json();
-      const links = json.links;
-      const ap = links.find(link =>
-        link.rel === "self" && link.type === "application/activity+json");
-      if (ap) {
-        this.actorId = ap.href;
-      }
-    } catch (err) {
-      console.error(err)
+    const res = await this.constructor.fetchFunction(
+      webfingerUrl,
+      { headers }
+    )
+    if (!res.ok) {
+      throw new Error(`Failed to fetch webfinger: ${res.status}`);
     }
+    const json = await res.json();
+    const links = json.links;
+    const ap = links.find(link =>
+      link.rel === "self" && link.type === "application/activity+json");
+    if (!ap) {
+      throw new Error('No ActivityPub link found in webfinger response');
+    }
+    this.objectId = ap.href;
   }
 
-  async updateActorId(id) {
-    const proxyUrl = `https://corsproxy.io/?url=${encodeURIComponent(id)}`;
-    try {
-      const res = await fetch(proxyUrl, {
-        headers: { Accept: 'application/activity+json, application/ld+json, application/json' }
-      })
-      if (!res.ok) {
-        console.error('Failed to fetch actor', res);
-        return;
-      }
-      const json = await res.json();
-
-      const profile = this.shadowRoot.querySelector('.profile');
-
-      profile.name = json.name;
-      profile.summary = json.summary;
-      profile.url = json.url;
-
-      this.setIcon(profile, json.icon);
-
-      const outboxFeed = this.shadowRoot.querySelector('.outbox-feed');
-
-      outboxFeed.feedId = json.outbox;
-
-    } catch (err) {
-      console.error(err)
-    }
-  }
-
-  setIcon(profile, icon) {
-
-    if (icon) {
-      if (typeof icon === 'string') {
-        profile.icon = icon;
+  get icon() {
+    if (!this.json) {
+      return null;
+    };
+    if (this.json.icon) {
+      if (typeof this.json.icon === 'string') {
+        return this.json.icon;
       } else {
         let iconObj;
-        if (Array.isArray(icon)) {
+        if (Array.isArray(this.json.icon)) {
           // TODO: pick best fit
-          iconObj = icon[0];
-        } else if (typeof icon === 'object') {
-          iconObj = icon;
+          iconObj = this.json.icon[0];
+        } else if (typeof this.json.icon === 'object') {
+          iconObj = this.json.icon;
         }
         if (iconObj) {
           if (asMatch(iconObj, 'Image')) {
-            this.setIcon(profile, iconObj.url);
+            return iconObj.url;
           } else if (asMatch(iconObj, 'Link')) {
-            profile.icon = icon.href;
+            return icon.href;
           }
         }
       }
     }
   }
 
-  get webfinger() {
-    return this.getAttribute('webfinger');
+  get name() {
+    return this.json?.name;
   }
 
-  set webfinger(value) {
-    this.setAttribute('webfinger', value);
+  get summary() {
+    return this.json?.summary;
   }
 
-  get actorId() {
-    return this.getAttribute('actor-id');
+  get url() {
+    return this.json?.url;
   }
 
-  set actorId(value) {
-    this.setAttribute('actor-id', value);
+  get outbox() {
+    return this.json?.outbox;
+  }
+
+  get following() {
+    return this.json?.following;
+  }
+
+  get followers() {
+    return this.json?.followers;
+  }
+
+  get liked() {
+    return this.json?.liked;
   }
 }
 
