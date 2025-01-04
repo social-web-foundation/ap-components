@@ -7,12 +7,6 @@ export class ActivityPubObjectCollection extends ActivityPubCollectionElement {
 
   static _itemElement = ActivityPubObject;
 
-  static styles = css`
-  :host {
-    display: block;
-  }
-  `;
-
   constructor() {
     super();
   }

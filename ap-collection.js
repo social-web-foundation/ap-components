@@ -18,9 +18,20 @@ export class ActivityPubCollectionElement extends ActivityPubElement {
   }
 
   static styles = css`
-  :host {
-    display: block;
-  }
+    :host {
+      display: block;
+    }
+    ol.items {
+      list-style: none;
+      list-style-type: none;
+      padding-left: 0;
+    }
+    ol.items > li.item::before {
+      content: '';
+    }
+    ol.items::marker {
+      display: none;
+    }
   `;
 
   constructor() {
