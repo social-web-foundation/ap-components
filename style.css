@@ -1,0 +1,30 @@
+/* style.css */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  width: 100%;
+  padding: 1em;
+  background-color: #f4f4f4;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  padding: 2em 0;
+}
+
+#account {
+  width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
