@@ -1,14 +1,14 @@
-// Usage: <ap-actor webfinger="webfinger:example@domain"></ap-actor>
+// Usage: <ap-actor-page webfinger="webfinger:example@domain"></ap-actor-page>
 // Description: Fetches the actor object from the given webfinger and displays the name, summary, and url of the actor.
 
-import { LitElement, html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
+import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
 import { ActivityPubElement } from './ap-element.js';
 import './ap-actor-profile.js';
 import './ap-activity-collection.js';
 import './ap-actor-collection.js';
 import './ap-object-collection.js';
 
-export class ActivityPubActor extends ActivityPubElement {
+export class ActivityPubActorPage extends ActivityPubElement {
 
   static get properties() {
     return {
@@ -65,7 +65,7 @@ export class ActivityPubActor extends ActivityPubElement {
         <nav class="feed-selector">
           <menu>
           ${['outbox', 'following', 'followers', 'liked'].map(
-            feed => html`
+        feed => html`
             <li>
               <button
                 @click="${() => this._feed = feed}"
@@ -89,7 +89,7 @@ export class ActivityPubActor extends ActivityPubElement {
               : (this._feed === 'liked')
                 ? html`<ap-object-collection class="liked-feed" object-id="${this.liked}"></ap-object-collection>`
                 : html`<p>Unknown feed: ${this._feed}</p>`
-            }
+        }
         </div>
       </div>
       `;
@@ -154,4 +154,4 @@ export class ActivityPubActor extends ActivityPubElement {
 }
 
 // Define the custom element
-customElements.define('ap-actor', ActivityPubActor);
+customElements.define('ap-actor-page', ActivityPubActorPage);
