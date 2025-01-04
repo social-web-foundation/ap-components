@@ -6,6 +6,7 @@ import { ActivityPubElement } from './ap-element.js';
 import './ap-actor-profile.js';
 import './ap-activity-collection.js';
 import './ap-actor-collection.js';
+import './ap-object-collection.js';
 
 export class ActivityPubActor extends ActivityPubElement {
 
@@ -51,8 +52,6 @@ export class ActivityPubActor extends ActivityPubElement {
     `;
     } else {
       return html`
-      <style>
-      </style>
       <div class="actor">
         <div class="actor-profile">
           <ap-actor-profile class="profile"
@@ -70,7 +69,10 @@ export class ActivityPubActor extends ActivityPubElement {
             <li>
               <button
                 @click="${() => this._feed = feed}"
-                class="${feed} ${this._feed === feed ? 'selected' : ''}">
+                class="${feed}${this._feed === feed ? ' selected' : ''}"
+                ${(this.json[feed]) ? '' : 'disabled title="Feed unavailable"'}
+                data-feed="${this.json[feed]}"
+              >
                 ${feed[0].toUpperCase() + feed.slice(1)}
               </button>
             </li>
