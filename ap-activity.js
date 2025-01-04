@@ -1,11 +1,15 @@
 import { ActivityPubElement } from './ap-element.js';
 import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
-import './ap-create-activity.js';
+import { ActivityPubCreateActivity } from './ap-create-activity.js';
 
 export class ActivityPubActivity extends ActivityPubElement {
 
   constructor() {
     super();
+  }
+
+  static typeMap = {
+    'Create': ActivityPubCreateActivity
   }
 
   static styles = css`
@@ -34,14 +38,12 @@ export class ActivityPubActivity extends ActivityPubElement {
       </div>
     `;
     } else {
-      switch (this.json?.type) {
-        case 'Create':
-          return html`
-          <div class="activity">
-            <ap-create-activity json="${JSON.stringify(this.json)}"></ap-create-activity>
-          </div>
-        `;
-        default:
+      const cls = this.constructor.typeMap[this.json.type];
+      if (cls) {
+        const el = new cls();
+        el.json = this.json;
+        return html`<div class="activity">${el}</div>`;
+      } else {
           return html`
           <div class="activity">
             <p>${this.json.type}</p>
