@@ -36,10 +36,25 @@ export class ActivityPubActorItem extends ActivityPubElement {
       <div class="actor">
         <avatar-icon class="icon" size="64" url="${this.icon}"></avatar-icon>
         <p class="name">${this.name}</p>
+        <a class="webfinger" href="web+acct:${this.webfinger}">${this.webfinger}</a>
         <div class="summary">${unsafeHTML(DOMPurify.sanitize(this.summary))}</div>
         <p><a class="url" href="${this.json.url}">${this.json.url}</a></p>
       </div>
     `;
+    }
+  }
+
+  get webfinger() {
+    if (!this.json) {
+      return;
+    }
+    if (this.json.webfinger) {
+      return this.json.webfinger;
+    } else {
+      const id = this.json.id;
+      const domain = (new URL(id)).hostname
+      const preferredUsername = this.json.preferredUsername;
+      return `${preferredUsername}@${domain}`;
     }
   }
 }
