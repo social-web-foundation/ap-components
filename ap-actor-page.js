@@ -65,8 +65,7 @@ export class ActivityPubActorPage extends ActivityPubElement {
         <nav class="feed-selector">
           <menu>
           ${['outbox', 'following', 'followers', 'liked'].map(
-        feed => html`
-            <li>
+            feed => html`
               <button
                 @click="${() => this._feed = feed}"
                 class="${feed}${this._feed === feed ? ' selected' : ''}"
@@ -75,7 +74,6 @@ export class ActivityPubActorPage extends ActivityPubElement {
               >
                 ${feed[0].toUpperCase() + feed.slice(1)}
               </button>
-            </li>
             `)}
           </menu>
         </nav>
