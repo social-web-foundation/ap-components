@@ -12,6 +12,12 @@ export class ActivityPubActorItem extends ActivityPubElement {
       float: left;
       margin-right: 8px;
     }
+    div.actor {
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        padding: 8px;
+        margin: 8px 0;
+    }
   `
 
   constructor() {

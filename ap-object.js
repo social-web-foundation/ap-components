@@ -7,12 +7,6 @@ export class ActivityPubObject extends ActivityPubElement {
   :host {
     display: block;
   }
-  .object {
-      border: 1px solid lightgray;
-      border-radius: 8px;
-      padding: 8px;
-      margin: 8px 0;
-  }
   `;
 
   constructor() {
