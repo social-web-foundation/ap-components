@@ -1,6 +1,7 @@
 import { ActivityPubElement } from './ap-element.js';
 import { html, css } from 'https://cdn.jsdelivr.net/gh/lit/dist@3/core/lit-core.min.js';
 import { ActivityPubCreateActivity } from './ap-create-activity.js';
+import { ActivityPubAnnounceActivity } from './ap-announce-activity.js';
 
 export class ActivityPubActivity extends ActivityPubElement {
 
@@ -9,7 +10,8 @@ export class ActivityPubActivity extends ActivityPubElement {
   }
 
   static typeMap = {
-    'Create': ActivityPubCreateActivity
+    'Create': ActivityPubCreateActivity,
+    'Announce': ActivityPubAnnounceActivity
   }
 
   static styles = css`
