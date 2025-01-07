@@ -3,6 +3,7 @@
   <head>
     <title>Account Handler</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="config.js" type="module"></script>
   </head>
   <body>
     <header>
@@ -41,7 +42,7 @@
         ActivityPubElement.fetchFunction =
           async (url, options) =>
             fetch(
-              `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+              `https://corsproxy.io/?key=${config.key}&url=${encodeURIComponent(url)}`,
               options
             );
 
