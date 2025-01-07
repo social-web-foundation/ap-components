@@ -17,11 +17,20 @@ export class ActivityPubActorProfile extends LitElement {
     super();
   }
 
+  static styles = css`
+    :host {
+      display: block;
+    }
+    .icon {
+      float: left;
+      margin-right: 8px;
+    }`;
+
   render() {
     return html`
-        <h2 class="name">${this.name}</h2>
         <avatar-icon class="icon" size="128" url="${this.icon}"></avatar-icon>
-        <p class="webfinger">${this.webfinger}</p>
+        <h2 class="name">${this.name}</h2>
+        <p class="webfinger"><a class="webfinger" href="web+${this.webfinger}">${this.webfinger}</a></p>
         <div class="summary">${unsafeHTML(DOMPurify.sanitize(this.summary))}</div>
         <p><a class="url" href="${this.url}">${this.url}</a></p>
       `;
