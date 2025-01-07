@@ -61,20 +61,20 @@ export class ActivityPubElement extends LitElement {
     }
   }
 
-  get icon() {
-    if (!this.json) {
+  getIcon(json) {
+    if (!json) {
       return null;
     };
-    if (this.json.icon) {
-      if (typeof this.json.icon === 'string') {
-        return this.json.icon;
+    if (json.icon) {
+      if (typeof json.icon === 'string') {
+        return json.icon;
       } else {
         let iconObj;
-        if (Array.isArray(this.json.icon)) {
+        if (Array.isArray(json.icon)) {
           // TODO: pick best fit
-          iconObj = this.json.icon[0];
-        } else if (typeof this.json.icon === 'object') {
-          iconObj = this.json.icon;
+          iconObj = json.icon[0];
+        } else if (typeof json.icon === 'object') {
+          iconObj = json.icon;
         }
         if (iconObj) {
           if (asMatch(iconObj, 'Image')) {
@@ -85,6 +85,10 @@ export class ActivityPubElement extends LitElement {
         }
       }
     }
+  }
+
+  get icon() {
+    return this.getIcon(this.json);
   }
 
   get name() {
