@@ -11,6 +11,7 @@
       <nav>
         <ul>
           <li><a href="javascript:registerAcctHandler()">Register</a></li>
+          <li><a href="javascript:unregisterAcctHandler()">Unregister</a></li>
         </ul>
         <form action="." method="get">
           <label for="actor-search">Actor:</label>
@@ -37,7 +38,18 @@
         );
       }
 
+      function unregisterAcctHandler() {
+        const loc = document.location.origin + document.location.pathname;
+        console.log("Unregistering protocol handler");
+        const handler = `${loc}?q=%s`
+        navigator.unregisterProtocolHandler(
+          "web+acct",
+          handler
+        );
+      }
+
       window.registerAcctHandler = registerAcctHandler;
+      window.unregisterAcctHandler = unregisterAcctHandler;
 
       window.onload = () => {
 
