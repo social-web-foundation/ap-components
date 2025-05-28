@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/social-web-foundation/ap-components/issues"
   },
-  "homepage": "https://github.com/social-web-foundation/ap-components#readme"
+  "homepage": "https://github.com/social-web-foundation/ap-components#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
