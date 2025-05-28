@@ -1,0 +1,29 @@
+{
+  "name": "ap-components",
+  "version": "1.0.0",
+  "description": "A collection of Web Components for displaying objects from the ActivityPub API",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/social-web-foundation/ap-components.git"
+  },
+  "keywords": [
+    "activitypub",
+    "webcomponents",
+    "activitystreams",
+    "socialweb",
+    "fediverse"
+  ],
+  "author": "Evan Prodromou <evan@socialwebfoundation.org>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/social-web-foundation/ap-components/issues"
+  },
+  "homepage": "https://github.com/social-web-foundation/ap-components#readme"
+}
