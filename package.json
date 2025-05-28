@@ -1,6 +1,6 @@
 {
   "name": "@socialwebfoundation/ap-components",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A collection of Web Components for displaying objects from the ActivityPub API",
   "main": "index.js",
   "directories": {
