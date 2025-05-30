@@ -13,8 +13,10 @@ npm install @socialwebfoundation/ap-components
 It's also possible to use the package through [UNPKG](https://unpkg.com). Just add this script to your HTML:
 
 ```html
-<script src="https://unpkg.com/@socialwebfoundation/ap-components"></script>
+<script type="module" src="https://unpkg.com/@socialwebfoundation/ap-components"></script>
 ```
+
+Note the `type` attribute; it's required for the way this package handles importing.
 
 ## Usage
 
