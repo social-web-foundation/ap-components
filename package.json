@@ -28,5 +28,11 @@
   "homepage": "https://github.com/social-web-foundation/ap-components#readme",
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "@web/test-runner": "^0.20.2",
+    "@web/test-runner-mocha": "^0.9.0",
+    "chai": "^5.2.0",
+    "mocha": "^11.5.0"
   }
 }
