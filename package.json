@@ -7,7 +7,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "web-test-runner test/**/*.test.js --node-resolve",
+    "watch": "web-test-runner test/**/*.test.js --node-resolve --watch"
   },
   "repository": {
     "type": "git",
