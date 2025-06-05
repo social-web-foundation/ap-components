@@ -3,6 +3,19 @@ import { ActivityPubElement } from '../lib/ap-element.js';
 function wrap(json) {
   return {
     ok: true,
+    status: 200,
+    statusText: "OK",
+    async json() {
+      return json
+    }
+  }
+}
+
+function missing() {
+  return {
+    ok: false,
+    status: 404,
+    statusText: "Not Found",
     async json() {
       return json
     }
@@ -46,6 +59,11 @@ export const mockData = new Map([
 ]);
 
 export function setupMockServer() {
-  ActivityPubElement.fetchFunction =
-    url => Promise.resolve(wrap(mockData.get(url)));
+  ActivityPubElement.fetchFunction = async (url, options) => {
+    if (!mockData.has(url)) {
+      return missing()
+    } else {
+      return wrap(mockData.get(url))
+    }
+  }
 }
