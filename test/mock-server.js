@@ -39,7 +39,9 @@ export const mockData = new Map([
     },
     preferredUsername: 'one',
     url: 'https://example.com/user/1.html',
-    liked: 'https://example.com/user/1/liked'
+    liked: 'https://example.com/user/1/liked',
+    followers: 'https://example.com/user/1/followers',
+    following: 'https://example.com/user/1/following'
   }],
   ['https://example.com/user/1/liked', {
     '@context': 'https://www.w3.org/ns/activitystreams',
@@ -62,6 +64,52 @@ export const mockData = new Map([
     orderedItems: [
       'https://example.com/note/1',
       'https://example.com/article/1'
+    ]
+  }],
+  ['https://example.com/user/1/followers', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/followers',
+    summary: 'Collection of people that follow Sample Q. Person',
+    type: 'OrderedCollection',
+    totalItems: 2,
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    first: 'https://example.com/user/1/followers/1'
+  }],
+  ['https://example.com/user/1/followers/1', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/followers/1',
+    summary: 'A page in the collection of people that follow Sample Q. Person',
+    type: 'OrderedCollectionPage',
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    partOf: 'https://example.com/user/1/followers',
+    orderedItems: [
+      'https://example.com/user/2',
+      'https://example.com/user/3'
+    ]
+  }],
+  ['https://example.com/user/1/following', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/following',
+    summary: 'Collection of people that Sample Q. Person follows',
+    type: 'OrderedCollection',
+    totalItems: 2,
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    first: 'https://example.com/user/1/following/1'
+  }],
+  ['https://example.com/user/1/following/1', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/following/1',
+    summary: 'A page in the collection of people Sample Q. Person follows',
+    type: 'OrderedCollectionPage',
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    partOf: 'https://example.com/user/1/following',
+    orderedItems: [
+      'https://example.com/user/2',
+      'https://example.com/user/3'
     ]
   }],
   ['https://example.com/note/1', {
@@ -89,6 +137,46 @@ export const mockData = new Map([
       id: 'https://example.com/user/1',
       name: 'Sample Q. Person'
     }
+  }],
+  ['https://example.com/user/2', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    type: 'Person',
+    id: 'https://example.com/user/2',
+    name: 'Other Q. Person',
+    to: 'as:Public',
+    summary: 'Another person used in unit tests for ap-components',
+    icon: {
+      type: 'Link',
+      mediaType: 'image/png',
+      width: 128,
+      height: 128,
+      href: 'https://upload.example.com/files/WJXMMWVLVTjuASgwSgIKo.png'
+    },
+    preferredUsername: 'two',
+    url: 'https://example.com/user/2.html',
+    liked: 'https://example.com/user/2/liked',
+    followers: 'https://example.com/user/2/followers',
+    following: 'https://example.com/user/2/following'
+  }],
+  ['https://example.com/user/3', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    type: 'Person',
+    id: 'https://example.com/user/3',
+    name: 'Other Q. Person',
+    to: 'as:Public',
+    summary: 'Yet another person used in unit tests for ap-components',
+    icon: {
+      type: 'Link',
+      mediaType: 'image/png',
+      width: 128,
+      height: 128,
+      href: 'https://upload.example.com/files/WJXMMWVLVTjuASgwSgIKo.png'
+    },
+    preferredUsername: 'three',
+    url: 'https://example.com/user/3.html',
+    liked: 'https://example.com/user/3/liked',
+    followers: 'https://example.com/user/3/followers',
+    following: 'https://example.com/user/3/following'
   }],
 ]);
 
