@@ -178,6 +178,24 @@ export const mockData = new Map([
     followers: 'https://example.com/user/3/followers',
     following: 'https://example.com/user/3/following'
   }],
+  ['https://example.com/user/1/create/example.com/note/1', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/create/example.com/note/1',
+    type: 'Create',
+    summary: 'Sample Q. Person created a note',
+    to: 'as:Public',
+    actor: 'https://example.com/user/1',
+    object: 'https://example.com/note/1'
+  }],
+  ['https://example.com/user/1/create/example.com/article/1', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/create/example.com/article/1',
+    type: 'Create',
+    summary: 'Sample Q. Person created an article',
+    to: 'as:Public',
+    actor: 'https://example.com/user/1',
+    object: 'https://example.com/article/1'
+  }],
 ]);
 
 export function setupMockServer() {
