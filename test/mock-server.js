@@ -28,7 +28,31 @@ export const mockData = new Map([
     type: 'Person',
     id: 'https://example.com/user/1',
     name: 'Sample Q. Person',
-    to: 'as:Public'
+    to: 'as:Public',
+    liked: 'https://example.com/user/1/liked'
+  }],
+  ['https://example.com/user/1/liked', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/liked',
+    summary: 'Collection of objects that Sample Q. Person has liked',
+    type: 'OrderedCollection',
+    totalItems: 2,
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    first: 'https://example.com/user/1/liked/1'
+  }],
+  ['https://example.com/user/1/liked/1', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/liked/1',
+    summary: 'A page in the collection of objects that Sample Q. Person has liked',
+    type: 'OrderedCollectionPage',
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    partOf: 'https://example.com/user/1/liked',
+    orderedItems: [
+      'https://example.com/note/1',
+      'https://example.com/article/1'
+    ]
   }],
   ['https://example.com/note/1', {
     '@context': 'https://www.w3.org/ns/activitystreams',
