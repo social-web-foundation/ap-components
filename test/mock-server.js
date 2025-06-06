@@ -29,6 +29,16 @@ export const mockData = new Map([
     id: 'https://example.com/user/1',
     name: 'Sample Q. Person',
     to: 'as:Public',
+    summary: 'A sample person used in unit tests for ap-components',
+    icon: {
+      type: 'Link',
+      mediaType: 'image/png',
+      width: 128,
+      height: 128,
+      href: 'https://upload.example.com/files/7VyVjfCVSGP25g6bgWc7e.png'
+    },
+    preferredUsername: 'one',
+    url: 'https://example.com/user/1.html',
     liked: 'https://example.com/user/1/liked'
   }],
   ['https://example.com/user/1/liked', {
