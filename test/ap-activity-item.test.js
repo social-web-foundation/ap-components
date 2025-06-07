@@ -62,4 +62,8 @@ describe('<ap-activity>', () => {
     expect(announceEl).to.exist;
     el.remove();
   });
+
+  it('registers ap-activity tag as a fallback', async () => {
+    expect(customElements.get('ap-activity')).to.exist
+  });
 });
