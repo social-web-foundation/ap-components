@@ -24,7 +24,6 @@ describe('<ap-create-activity>', () => {
     document.body.appendChild(el);
     await el.updateComplete;
     await el.updateComplete;
-    console.log(el.shadowRoot.innerHTML)
     const objectEl = el.shadowRoot.querySelector('ap-object')
     expect(objectEl).to.exist;
     if (objectEl.updateComplete) await objectEl.updateComplete;
@@ -40,7 +39,6 @@ describe('<ap-create-activity>', () => {
     await el.updateComplete;
     await el.updateComplete;
     await el.updateComplete;
-    console.log(el.shadowRoot.innerHTML)
     const objectEl = el.shadowRoot.querySelector('ap-object')
     expect(objectEl).to.exist;
     if (objectEl.updateComplete) await objectEl.updateComplete;
