@@ -196,6 +196,15 @@ export const mockData = new Map([
     actor: 'https://example.com/user/1',
     object: 'https://example.com/article/1'
   }],
+  ['https://example.com/user/1/announce/example.com/note/1', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/announce/example.com/note/1',
+    type: 'Announce',
+    summary: 'Sample Q. Person shared a note',
+    to: 'as:Public',
+    actor: 'https://example.com/user/1',
+    object: 'https://example.com/note/1'
+  }]
 ]);
 
 export function setupMockServer() {
