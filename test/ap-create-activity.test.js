@@ -24,8 +24,11 @@ describe('<ap-create-activity>', () => {
     document.body.appendChild(el);
     await el.updateComplete;
     await el.updateComplete;
-    const noteEl = el.shadowRoot.querySelector('ap-object')
-    expect(noteEl).to.exist;
+    console.log(el.shadowRoot.innerHTML)
+    const objectEl = el.shadowRoot.querySelector('ap-object')
+    expect(objectEl).to.exist;
+    if (objectEl.updateComplete) await objectEl.updateComplete;
+    expect(objectEl.objectId).to.equal('https://example.com/note/1');
     el.remove();
   });
 
@@ -37,8 +40,11 @@ describe('<ap-create-activity>', () => {
     await el.updateComplete;
     await el.updateComplete;
     await el.updateComplete;
-    const noteEl = el.shadowRoot.querySelector('ap-object')
-    expect(noteEl).to.exist;
+    console.log(el.shadowRoot.innerHTML)
+    const objectEl = el.shadowRoot.querySelector('ap-object')
+    expect(objectEl).to.exist;
+    if (objectEl.updateComplete) await objectEl.updateComplete;
+    expect(objectEl.objectId).to.equal('https://example.com/note/1');
     el.remove();
   });
 });
