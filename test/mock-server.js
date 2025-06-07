@@ -41,7 +41,9 @@ export const mockData = new Map([
     url: 'https://example.com/user/1.html',
     liked: 'https://example.com/user/1/liked',
     followers: 'https://example.com/user/1/followers',
-    following: 'https://example.com/user/1/following'
+    following: 'https://example.com/user/1/following',
+    inbox: 'https://example.com/user/1/inbox',
+    outbox: 'https://example.com/user/1/outbox'
   }],
   ['https://example.com/user/1/liked', {
     '@context': 'https://www.w3.org/ns/activitystreams',
@@ -110,6 +112,52 @@ export const mockData = new Map([
     orderedItems: [
       'https://example.com/user/2',
       'https://example.com/user/3'
+    ]
+  }],
+  ['https://example.com/user/1/inbox', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/inbox',
+    summary: 'Collection of activities that Sample Q. Person has received',
+    type: 'OrderedCollection',
+    totalItems: 2,
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    first: 'https://example.com/user/1/inbox/1'
+  }],
+  ['https://example.com/user/1/inbox/1', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/inbox/1',
+    summary: 'A page in the collection of activities that Sample Q. Person has received',
+    type: 'OrderedCollectionPage',
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    partOf: 'https://example.com/user/1/inbox',
+    orderedItems: [
+      'https://example.com/user/1/create/example.com/note/1',
+      'https://example.com/user/1/announce/example.com/note/1'
+    ]
+  }],
+  ['https://example.com/user/1/outbox', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/outbox',
+    summary: 'Collection of activities that Sample Q. Person has done',
+    type: 'OrderedCollection',
+    totalItems: 2,
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    first: 'https://example.com/user/1/outbox/1'
+  }],
+  ['https://example.com/user/1/outbox/1', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/outbox/1',
+    summary: 'A page in the collection of activities that Sample Q. Person has done',
+    type: 'OrderedCollectionPage',
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    partOf: 'https://example.com/user/1/outbox',
+    orderedItems: [
+      'https://example.com/user/1/create/example.com/note/1',
+      'https://example.com/user/1/announce/example.com/note/1'
     ]
   }],
   ['https://example.com/note/1', {
