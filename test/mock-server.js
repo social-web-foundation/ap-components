@@ -43,7 +43,8 @@ export const mockData = new Map([
     followers: 'https://example.com/user/1/followers',
     following: 'https://example.com/user/1/following',
     inbox: 'https://example.com/user/1/inbox',
-    outbox: 'https://example.com/user/1/outbox'
+    outbox: 'https://example.com/user/1/outbox',
+    webfinger: 'one@example.com'
   }],
   ['https://example.com/user/1/liked', {
     '@context': 'https://www.w3.org/ns/activitystreams',
