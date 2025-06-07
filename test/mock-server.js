@@ -253,6 +253,16 @@ export const mockData = new Map([
     to: 'as:Public',
     actor: 'https://example.com/user/1',
     object: 'https://example.com/note/1'
+  }],
+  ['https://example.com/.well-known/webfinger?resource=acct:one@example.com', {
+    'subject': 'acct:one@example.com',
+    'links': [
+      {
+        'rel': 'self',
+        'type': 'application/activity+json',
+        'href': 'https://example.com/user/1'
+      }
+    ]
   }]
 ]);
 
