@@ -25,7 +25,7 @@ describe('<ap-activity-collection>', () => {
     await el.updateComplete;
     await el.updateComplete;
     await el.updateComplete;
-    const objects = el.shadowRoot.querySelectorAll('ap-activity')
+    const objects = el.shadowRoot.querySelectorAll('ap-activity-item')
     expect(objects.length).to.equal(2);
     el.remove();
   });
@@ -39,7 +39,7 @@ describe('<ap-activity-collection>', () => {
     await el.updateComplete;
     await el.updateComplete;
     await el.updateComplete;
-    const objects = el.shadowRoot.querySelectorAll('ap-activity')
+    const objects = el.shadowRoot.querySelectorAll('ap-activity-item')
     expect(objects.length).to.equal(2);
     el.remove();
   });

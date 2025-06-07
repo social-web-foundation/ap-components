@@ -1,5 +1,5 @@
 import { expect } from 'https://esm.sh/chai@4.3.8';
-import '../lib/ap-activity.js';
+import '../lib/ap-activity-item.js';
 import { mockData, setupMockServer } from './mock-server.js'
 
 setupMockServer()
@@ -10,7 +10,7 @@ const announceId = 'https://example.com/user/1/announce/example.com/note/1'
 describe('<ap-activity>', () => {
 
   it('shows error when _error is set', async () => {
-    const el = document.createElement('ap-activity');
+    const el = document.createElement('ap-activity-item');
     el.objectId = createId;
     el._error = 'Something went wrong';
     document.body.appendChild(el);
@@ -20,7 +20,7 @@ describe('<ap-activity>', () => {
   });
 
   it('renders a Create activity when json is provided', async () => {
-    const el = document.createElement('ap-activity');
+    const el = document.createElement('ap-activity-item');
     el.json = mockData.get(createId)
     document.body.appendChild(el);
     await el.updateComplete;
@@ -30,7 +30,7 @@ describe('<ap-activity>', () => {
   });
 
   it('renders an Announce activity when json is provided', async () => {
-    const el = document.createElement('ap-activity');
+    const el = document.createElement('ap-activity-item');
     el.json = mockData.get(announceId)
     document.body.appendChild(el);
     await el.updateComplete;
@@ -40,7 +40,7 @@ describe('<ap-activity>', () => {
   });
 
   it('renders a Create activity when object ID is provided', async () => {
-    const el = document.createElement('ap-activity');
+    const el = document.createElement('ap-activity-item');
     el.objectId = createId
     document.body.appendChild(el);
     await el.updateComplete;
@@ -52,7 +52,7 @@ describe('<ap-activity>', () => {
   });
 
   it('renders an Announce activity when object ID is provided', async () => {
-    const el = document.createElement('ap-activity');
+    const el = document.createElement('ap-activity-item');
     el.objectId = announceId
     document.body.appendChild(el);
     await el.updateComplete;
