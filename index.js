@@ -1,5 +1,5 @@
 import { ActivityPubActivityCollection } from './lib/ap-activity-collection.js'
-import { ActivityPubActivity } from './lib/ap-activity.js'
+import { ActivityPubActivityItem } from './lib/ap-activity-item.js'
 import { ActivityPubActorCollection } from './lib/ap-actor-collection.js'
 import { ActivityPubActorItem } from './lib/ap-actor-item.js'
 import { ActivityPubActorPage } from './lib/ap-actor-page.js'
@@ -16,7 +16,7 @@ import { AvatarIcon } from './lib/avatar-icon.js'
 
 export {
   ActivityPubActivityCollection,
-  ActivityPubActivity,
+  ActivityPubActivityItem,
   ActivityPubActorCollection,
   ActivityPubActorItem,
   ActivityPubActorPage,
