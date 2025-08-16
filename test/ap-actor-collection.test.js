@@ -5,6 +5,7 @@ import { mockData, setupMockServer } from './mock-server.js'
 setupMockServer()
 
 const objectId = 'https://example.com/user/1/followers'
+const collectionWithEmbeddedObjects = 'https://example.com/user/1/following'
 
 describe('<ap-actor-collection>', () => {
 
@@ -30,7 +31,7 @@ describe('<ap-actor-collection>', () => {
     el.remove();
   });
 
-  it('renders an Actor collection when object ID is provided', async () => {
+  it('renders an Actor collection when objectId is set', async () => {
     const el = document.createElement('ap-actor-collection');
     el.objectId = objectId
     document.body.appendChild(el);
@@ -39,8 +40,25 @@ describe('<ap-actor-collection>', () => {
     await el.updateComplete;
     await el.updateComplete;
     await el.updateComplete;
+    await el.updateComplete;
     const objects = el.shadowRoot.querySelectorAll('ap-actor-item')
     expect(objects.length).to.equal(2);
+    el.remove();
+  });
+
+  it('renders an Actor collection with embedded objects', async () => {
+    const el = document.createElement('ap-actor-collection');
+    el.objectId = collectionWithEmbeddedObjects
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    await el.updateComplete;
+    await el.updateComplete;
+    await el.updateComplete;
+    await el.updateComplete;
+    await el.updateComplete;
+    const objects = el.shadowRoot.querySelectorAll('ap-actor-item')
+    expect(objects.length).to.equal(22);
     el.remove();
   });
 });

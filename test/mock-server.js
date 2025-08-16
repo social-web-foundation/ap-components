@@ -97,10 +97,37 @@ export const mockData = new Map([
     id: 'https://example.com/user/1/following',
     summary: 'Collection of people that Sample Q. Person follows',
     type: 'OrderedCollection',
-    totalItems: 2,
+    totalItems: 22,
     attributedTo: 'https://example.com/user/1',
     to: 'as:Public',
-    first: 'https://example.com/user/1/following/1'
+    first: {
+      id: 'https://example.com/user/1/following/2',
+      type: 'OrderedCollectionPage'
+    },
+    last: {
+      id: 'https://example.com/user/1/following/1',
+      type: 'OrderedCollectionPage'
+    }
+  }],
+  ['https://example.com/user/1/following/2', {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    id: 'https://example.com/user/1/following/2',
+    summary: 'A page in the collection of people Sample Q. Person follows',
+    type: 'OrderedCollectionPage',
+    attributedTo: 'https://example.com/user/1',
+    to: 'as:Public',
+    partOf: {
+      id: 'https://example.com/user/1/following',
+      type: 'OrderedCollection'
+    },
+    next: {
+      id: 'https://example.com/user/1/following/1',
+      type: 'OrderedCollectionPage'
+    },
+    orderedItems: [
+      'https://example.com/user/23',
+      'https://example.com/user/22'
+    ]
   }],
   ['https://example.com/user/1/following/1', {
     '@context': 'https://www.w3.org/ns/activitystreams',
@@ -109,10 +136,35 @@ export const mockData = new Map([
     type: 'OrderedCollectionPage',
     attributedTo: 'https://example.com/user/1',
     to: 'as:Public',
-    partOf: 'https://example.com/user/1/following',
+    partOf: {
+      id: 'https://example.com/user/1/following',
+      type: 'OrderedCollection'
+    },
+    prev: {
+      id: 'https://example.com/user/1/following/2',
+      type: 'OrderedCollectionPage'
+    },
     orderedItems: [
-      'https://example.com/user/2',
-      'https://example.com/user/3'
+      'https://example.com/user/21',
+      'https://example.com/user/20',
+      'https://example.com/user/19',
+      'https://example.com/user/18',
+      'https://example.com/user/17',
+      'https://example.com/user/16',
+      'https://example.com/user/15',
+      'https://example.com/user/14',
+      'https://example.com/user/13',
+      'https://example.com/user/12',
+      'https://example.com/user/11',
+      'https://example.com/user/10',
+      'https://example.com/user/9',
+      'https://example.com/user/8',
+      'https://example.com/user/7',
+      'https://example.com/user/6',
+      'https://example.com/user/5',
+      'https://example.com/user/4',
+      'https://example.com/user/3',
+      'https://example.com/user/2'
     ]
   }],
   ['https://example.com/user/1/inbox', {
@@ -187,46 +239,6 @@ export const mockData = new Map([
       name: 'Sample Q. Person'
     }
   }],
-  ['https://example.com/user/2', {
-    '@context': 'https://www.w3.org/ns/activitystreams',
-    type: 'Person',
-    id: 'https://example.com/user/2',
-    name: 'Other Q. Person',
-    to: 'as:Public',
-    summary: 'Another person used in unit tests for ap-components',
-    icon: {
-      type: 'Link',
-      mediaType: 'image/png',
-      width: 128,
-      height: 128,
-      href: 'https://upload.example.com/files/WJXMMWVLVTjuASgwSgIKo.png'
-    },
-    preferredUsername: 'two',
-    url: 'https://example.com/user/2.html',
-    liked: 'https://example.com/user/2/liked',
-    followers: 'https://example.com/user/2/followers',
-    following: 'https://example.com/user/2/following'
-  }],
-  ['https://example.com/user/3', {
-    '@context': 'https://www.w3.org/ns/activitystreams',
-    type: 'Person',
-    id: 'https://example.com/user/3',
-    name: 'Other Q. Person',
-    to: 'as:Public',
-    summary: 'Yet another person used in unit tests for ap-components',
-    icon: {
-      type: 'Link',
-      mediaType: 'image/png',
-      width: 128,
-      height: 128,
-      href: 'https://upload.example.com/files/WJXMMWVLVTjuASgwSgIKo.png'
-    },
-    preferredUsername: 'three',
-    url: 'https://example.com/user/3.html',
-    liked: 'https://example.com/user/3/liked',
-    followers: 'https://example.com/user/3/followers',
-    following: 'https://example.com/user/3/following'
-  }],
   ['https://example.com/user/1/create/example.com/note/1', {
     '@context': 'https://www.w3.org/ns/activitystreams',
     id: 'https://example.com/user/1/create/example.com/note/1',
@@ -265,6 +277,31 @@ export const mockData = new Map([
     ]
   }]
 ]);
+
+for (let i = 2; i <= 23; i++) {
+  mockData.set(`https://example.com/user/${i}`, {
+    '@context': 'https://www.w3.org/ns/activitystreams',
+    type: 'Person',
+    id: `https://example.com/user/${i}`,
+    name: 'Other Q. Person',
+    to: 'as:Public',
+    summary: 'Another person used in unit tests for ap-components',
+    icon: {
+      type: 'Link',
+      mediaType: 'image/png',
+      width: 128,
+      height: 128,
+      href: 'https://upload.example.com/files/WJXMMWVLVTjuASgwSgIKo.png'
+    },
+    preferredUsername: `user${i}`,
+    url: `https://example.com/user/${i}.html`,
+    inbox: `https://example.com/user/${i}/inbox`,
+    outbox: `https://example.com/user/${i}/outbox`,
+    followers: `https://example.com/user/${i}/followers`,
+    following: `https://example.com/user/${i}/following`,
+    liked: `https://example.com/user/${i}/liked`
+  })
+}
 
 export function setupMockServer() {
   ActivityPubElement.fetchFunction = async (url, options) => {
