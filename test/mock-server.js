@@ -294,7 +294,12 @@ for (let i = 2; i <= 23; i++) {
       href: 'https://upload.example.com/files/WJXMMWVLVTjuASgwSgIKo.png'
     },
     preferredUsername: `user${i}`,
-    url: `https://example.com/user/${i}.html`,
+    url: (i % 3 === 0)
+      ? `https://example.com/user/${i}.html`
+      : (i % 3 === 1)
+        ? { type: 'Link', rel: 'alternate', type: 'text/html', href: `https://example.com/user/${i}.html` }
+        : [ { type: 'Link', rel: 'alternate', type: 'text/html', href: `https://example.com/user/${i}.html` },
+            { type: 'Link', rel: 'alternate', type: 'application/pdf', href: `https://example.com/user/${i}.pdf` } ],
     inbox: `https://example.com/user/${i}/inbox`,
     outbox: `https://example.com/user/${i}/outbox`,
     followers: `https://example.com/user/${i}/followers`,

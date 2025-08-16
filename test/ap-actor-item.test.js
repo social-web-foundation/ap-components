@@ -37,4 +37,38 @@ describe('<ap-actor-item>', () => {
     expect(el.shadowRoot.textContent).to.include('Sample Q. Person');
     el.remove();
   });
+
+  it('renders an actor item when the url is an embedded object', async () => {
+    const el = document.createElement('ap-actor-item');
+    el.json = mockData.get('https://example.com/user/4')
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    const links = el.shadowRoot.querySelectorAll('a');
+    let link
+    links.forEach(a => {
+      if (a.href === 'https://example.com/user/4.html') {
+        link = a;
+      }
+    });
+    expect(link).to.be.ok;
+    el.remove();
+  });
+
+  it('renders an actor item when the url is an array of embedded objects', async () => {
+    const el = document.createElement('ap-actor-item');
+    el.json = mockData.get('https://example.com/user/5')
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    const links = el.shadowRoot.querySelectorAll('a');
+    let link
+    links.forEach(a => {
+      if (a.href === 'https://example.com/user/5.html') {
+        link = a;
+      }
+    });
+    expect(link).to.be.ok;
+    el.remove();
+  });
 });
