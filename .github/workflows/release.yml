@@ -8,11 +8,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-and-publish:
+
+  runTests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20, 22, 24, 25]
+    steps:
+
+    - uses: actions/checkout@v6
+
+    - uses: actions/setup-node@v6
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: npm
+        cache-dependency-path: package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm run test
+
+  publish-npm:
+    needs: runTests
+    runs-on: ubuntu-latest
+
     permissions:
-      id-token: write
       contents: read
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -21,17 +45,10 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org/'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run tests
-        run: npm test
+          node-version: 25
+          registry-url: https://registry.npmjs.org
+          cache: npm
+          cache-dependency-path: package-lock.json
 
       - name: Publish to NPM
-        if: success()
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ""
+        run: npm publish --access public --provenance
