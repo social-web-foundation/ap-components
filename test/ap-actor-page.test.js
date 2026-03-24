@@ -57,4 +57,24 @@ describe('<ap-actor-page>', () => {
     expect(el.shadowRoot.querySelector('ap-activity-collection')).to.exist
     el.remove();
   });
+
+  it('renders an Actor when url is an object', async () => {
+    const el = document.createElement('ap-actor-page');
+    el.json = mockData.get('https://example.com/user/4')
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    expect(el.shadowRoot.innerHTML).to.include(el.json.url.href)
+    el.remove();
+  });
+
+  it('renders an Actor when url is an array', async () => {
+    const el = document.createElement('ap-actor-page');
+    el.json = mockData.get('https://example.com/user/5')
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    expect(el.shadowRoot.innerHTML).to.include(el.json.url[0].href)
+    el.remove();
+  });
 });
