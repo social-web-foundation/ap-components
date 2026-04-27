@@ -43,4 +43,71 @@ describe('<ap-object-collection>', () => {
     expect(objects.length).to.equal(2);
     el.remove();
   });
+
+  it('shows the collection name when provided', async () => {
+    const el = document.createElement('ap-object-collection');
+    el.json = {
+      '@context': 'https://www.w3.org/ns/activitystreams',
+      id: 'https://example.com/test/named-object-collection',
+      type: 'OrderedCollection',
+      name: 'Test Object Collection Header',
+      totalItems: 137,
+      orderedItems: []
+    };
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    expect(el.shadowRoot.textContent).to.include('Test Object Collection Header');
+    el.remove();
+  });
+
+  it('shows totalItems when provided', async () => {
+    const el = document.createElement('ap-object-collection');
+    el.json = {
+      '@context': 'https://www.w3.org/ns/activitystreams',
+      id: 'https://example.com/test/counted-object-collection',
+      type: 'OrderedCollection',
+      name: 'Counted Objects',
+      totalItems: 137,
+      orderedItems: []
+    };
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    expect(el.shadowRoot.textContent).to.include('137');
+    el.remove();
+  });
+
+  it('falls back to summary when name is not provided', async () => {
+    const el = document.createElement('ap-object-collection');
+    el.json = {
+      '@context': 'https://www.w3.org/ns/activitystreams',
+      id: 'https://example.com/test/summary-object-collection',
+      type: 'OrderedCollection',
+      summary: 'Object Summary Fallback Text',
+      totalItems: 0,
+      orderedItems: []
+    };
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    expect(el.shadowRoot.textContent).to.include('Object Summary Fallback Text');
+    el.remove();
+  });
+
+  it("shows 'Collection' when neither name nor summary is provided", async () => {
+    const el = document.createElement('ap-object-collection');
+    el.json = {
+      '@context': 'https://www.w3.org/ns/activitystreams',
+      id: 'https://example.com/test/default-object-collection',
+      type: 'OrderedCollection',
+      totalItems: 0,
+      orderedItems: []
+    };
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await el.updateComplete;
+    expect(el.shadowRoot.textContent).to.include('Collection');
+    el.remove();
+  });
 });
