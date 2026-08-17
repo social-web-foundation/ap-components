@@ -1,4 +1,4 @@
-import { expect } from 'https://esm.sh/chai@4.3.8';
+import { expect } from 'chai';
 import '../lib/ap-article.js';
 import { mockData, setupMockServer } from './mock-server.js'
 
