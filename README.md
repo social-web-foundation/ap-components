@@ -10,13 +10,24 @@ To install in your own JavaScript application, use the `@socialwebfoundation/ap-
 npm install @socialwebfoundation/ap-components
 ```
 
-It's also possible to use the package through [UNPKG](https://unpkg.com). Just add this script to your HTML:
+If you use a bundler (Vite, esbuild, webpack, Rollup, etc.), import the package
+and it will resolve its dependencies (`lit`, `dompurify`, `activitystrea.ms`)
+from `node_modules` like any other ES module:
+
+```javascript
+import '@socialwebfoundation/ap-components'
+```
+
+It's also possible to use the package without a bundler through a CDN such as
+[UNPKG](https://unpkg.com) or [jsDelivr](https://www.jsdelivr.com). The published
+package includes a self-contained, minified bundle with all dependencies
+included; the CDNs serve it by default. Just add this script to your HTML:
 
 ```html
 <script type="module" src="https://unpkg.com/@socialwebfoundation/ap-components"></script>
 ```
 
-Note the `type` attribute; it's required for the way this package handles importing.
+Note the `type` attribute; it's required because the bundle is an ES module.
 
 ## Usage
 
