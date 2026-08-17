@@ -164,6 +164,17 @@ https://github.com/social-web-foundation/ap-components/issues
 
 Then, start a pull request.
 
+### Development
+
+```shell
+npm install       # install dependencies
+npm test          # run the test suite in a headless browser
+npm run build     # produce the self-contained bundle in dist/
+```
+
+The `dist/` bundle is not committed; it is built automatically when the package
+is packed for publishing (`prepack`).
+
 ## License
 
 Copyright 2024-2025 Social Web Foundation
