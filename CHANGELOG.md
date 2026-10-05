@@ -8,6 +8,13 @@ the tagged release commits.
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-10-05
+
+### Fixed
+
+- Install dependencies in the publishing job so the prepack bundle build can
+  run. The 1.4.0 npm publication failed before uploading the package.
+
 ## [1.4.0] - 2026-10-05
 
 ### Added
@@ -138,7 +145,8 @@ the tagged release commits.
 - HTML sanitization with DOMPurify.
 - Apache License, Version 2.0.
 
-[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/social-web-foundation/ap-components/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/social-web-foundation/ap-components/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/social-web-foundation/ap-components/compare/v1.2.6...v1.3.0
 [1.2.6]: https://github.com/social-web-foundation/ap-components/compare/v1.2.5...v1.2.6
