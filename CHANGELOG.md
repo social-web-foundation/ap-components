@@ -8,6 +8,12 @@ the tagged release commits.
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-10-05
+
+### Changed
+
+- Updated qs, rollup, side-channel, and side-channel-list.
+
 ## [1.4.1] - 2026-10-05
 
 ### Fixed
@@ -145,7 +151,8 @@ the tagged release commits.
 - HTML sanitization with DOMPurify.
 - Apache License, Version 2.0.
 
-[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.2...HEAD
+[1.4.2]: https://github.com/social-web-foundation/ap-components/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/social-web-foundation/ap-components/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/social-web-foundation/ap-components/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/social-web-foundation/ap-components/compare/v1.2.6...v1.3.0
