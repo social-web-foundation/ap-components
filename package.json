@@ -42,7 +42,7 @@
     "access": "public"
   },
   "devDependencies": {
-    "@web/test-runner": "^0.20.2",
+    "@web/test-runner": "^1.0.0",
     "@web/test-runner-mocha": "^1.0.0",
     "chai": "^6.2.2",
     "esbuild": "^0.28.2",
