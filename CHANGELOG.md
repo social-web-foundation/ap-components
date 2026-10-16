@@ -10,6 +10,11 @@ the tagged release commits.
 
 ## [Unreleased]
 
+### Fixed
+
+- Use native fetch for actor page WebFinger discovery so custom ActivityPub
+  fetch functions do not route WebFinger requests through an ActivityPub proxy.
+
 ## [1.4.3] - 2026-10-16
 
 ### Added

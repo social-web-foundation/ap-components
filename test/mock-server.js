@@ -342,6 +342,18 @@ for (const { domain, username, name } of [
 }
 
 export function setupMockServer() {
+  const nativeFetch = globalThis.fetch
+  globalThis.fetch = async (input, options) => {
+    const url = new URL(input instanceof Request ? input.url : input, document.baseURI)
+    if (url.pathname === '/.well-known/webfinger') {
+      return mockData.has(url.href) ? wrap(mockData.get(url.href)) : missing()
+    }
+    return nativeFetch.call(globalThis, input, options)
+  }
+  after(() => {
+    globalThis.fetch = nativeFetch
+  })
+
   ActivityPubElement.fetchFunction = async (url, options) => {
     if (!mockData.has(url)) {
       return missing()
