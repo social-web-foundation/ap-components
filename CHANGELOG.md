@@ -10,6 +10,8 @@ the tagged release commits.
 
 ## [Unreleased]
 
+## [1.4.3] - 2026-10-16
+
 ### Added
 
 - Test fixtures and coverage for Unicode usernames and internationalized domains
@@ -20,6 +22,7 @@ the tagged release commits.
 - Use activitypub-webfinger for actor discovery and readable handle derivation,
   and webfinger for account URI formatting.
 - Bundle dependencies for browser tests.
+- Upgrade activitystrea.ms, Chai, and @rollup/plugin-node-resolve.
 
 ### Fixed
 
@@ -172,7 +175,8 @@ the tagged release commits.
 - HTML sanitization with DOMPurify.
 - Apache License, Version 2.0.
 
-[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.2...HEAD
+[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.3...HEAD
+[1.4.3]: https://github.com/social-web-foundation/ap-components/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/social-web-foundation/ap-components/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/social-web-foundation/ap-components/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/social-web-foundation/ap-components/compare/v1.3.0...v1.4.0
