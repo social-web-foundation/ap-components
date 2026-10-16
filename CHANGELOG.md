@@ -10,6 +10,8 @@ the tagged release commits.
 
 ## [Unreleased]
 
+## [1.4.4] - 2026-10-16
+
 ### Fixed
 
 - Use native fetch for actor page WebFinger discovery so custom ActivityPub
@@ -180,7 +182,8 @@ the tagged release commits.
 - HTML sanitization with DOMPurify.
 - Apache License, Version 2.0.
 
-[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.3...HEAD
+[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.4...HEAD
+[1.4.4]: https://github.com/social-web-foundation/ap-components/compare/v1.4.3...v1.4.4
 [1.4.3]: https://github.com/social-web-foundation/ap-components/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/social-web-foundation/ap-components/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/social-web-foundation/ap-components/compare/v1.4.0...v1.4.1
