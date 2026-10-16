@@ -11,7 +11,7 @@ function wrap(json) {
   }
 }
 
-function missing() {
+function missing(json) {
   return {
     ok: false,
     status: 404,
