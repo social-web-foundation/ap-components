@@ -10,6 +10,25 @@ the tagged release commits.
 
 ## [Unreleased]
 
+### Added
+
+- Test fixtures and coverage for Unicode usernames and internationalized domains
+  in actor discovery and handle display.
+
+### Changed
+
+- Use activitypub-webfinger for actor discovery and readable handle derivation,
+  and webfinger for account URI formatting.
+- Bundle dependencies for browser tests.
+
+### Fixed
+
+- Display decoded usernames and Unicode domains in actor handles while using
+  percent-encoded usernames and IDNA domains in `web+acct:` links.
+- Render the actor profile's WebFinger link as a Lit template.
+- Use bounded timer polling in actor page tests to avoid background-tab
+  animation frame timeouts.
+
 ## [1.4.2] - 2026-10-05
 
 ### Changed

@@ -5,7 +5,7 @@ import { mockData, setupMockServer } from './mock-server.js'
 setupMockServer()
 
 const actorId = 'https://example.com/user/1'
-const webfinger = 'acct:one@example.com'
+const webfinger = 'one@example.com'
 
 describe('<ap-actor-page>', () => {
 
@@ -63,15 +63,15 @@ describe('<ap-actor-page>', () => {
     { label: 'PRECIS@ASCII', username: 'ελπίδα', domain: 'example.com', hostname: 'example.com' },
     { label: 'ASCII@IDNA', username: 'sample', domain: 'ελληνικά.example', hostname: 'xn--hxargifdar.example' }
   ]) {
-    it(`resolves and renders an Actor for ${label}`, async () => {
+    it(`resolves ${label} and passes readable text and an encoded href to the profile`, async () => {
       const el = document.createElement('ap-actor-page');
       const expectedId = `https://${hostname}/user/${encodeURIComponent(username)}`;
-      el.webfinger = `acct:${username}@${domain}`;
+      el.webfinger = `${username}@${domain}`;
       try {
         document.body.appendChild(el);
         const deadline = performance.now() + 1000;
         while (!el.json && !el._error && performance.now() < deadline) {
-          await new Promise(resolve => requestAnimationFrame(resolve));
+          await new Promise(resolve => setTimeout(resolve, 10));
         }
         expect(el._error).to.not.be.ok;
         expect(el.json, 'actor should load through connectedCallback').to.exist;
@@ -80,7 +80,17 @@ describe('<ap-actor-page>', () => {
         expect(el.json.id).to.equal(expectedId);
         expect(el.json.preferredUsername).to.equal(username);
         expect(el.json.webfinger).to.equal(`${username}@${domain}`);
-        expect(el.shadowRoot.querySelector('ap-actor-profile')).to.exist;
+        const profile = el.shadowRoot.querySelector('ap-actor-profile');
+        expect(profile).to.exist;
+        const expectedHandle = `${username}@${domain}`;
+        const expectedHref = `web+acct:${encodeURIComponent(username)}@${hostname}`;
+        expect(profile.webfinger).to.equal(expectedHandle);
+        expect(profile.webfingerHref).to.equal(expectedHref);
+        await profile.updateComplete;
+        const link = profile.shadowRoot.querySelector('a.webfinger');
+        expect(link).to.exist;
+        expect(link.textContent).to.equal(expectedHandle);
+        expect(link.getAttribute('href')).to.equal(expectedHref);
         expect(el.shadowRoot.querySelector('nav.feed-selector')).to.exist;
         expect(el.shadowRoot.querySelector('ap-activity-collection')).to.exist;
       } finally {
