@@ -266,7 +266,7 @@ export const mockData = new Map([
     actor: 'https://example.com/user/1',
     object: 'https://example.com/note/1'
   }],
-  ['https://example.com/.well-known/webfinger?resource=acct:one@example.com', {
+  ['https://example.com/.well-known/webfinger?resource=acct%3Aone%40example.com', {
     'subject': 'acct:one@example.com',
     'links': [
       {
@@ -305,6 +305,39 @@ for (let i = 2; i <= 23; i++) {
     followers: `https://example.com/user/${i}/followers`,
     following: `https://example.com/user/${i}/following`,
     liked: `https://example.com/user/${i}/liked`
+  })
+}
+
+for (const { domain, username, name } of [
+  { domain: 'example.com', username: 'ελπίδα', name: 'Ελπίδα' },
+  { domain: 'ελληνικά.example', username: 'sample', name: 'Sample Person' },
+  { domain: 'ελληνικά.example', username: 'αλέξανδρος', name: 'Αλέξανδρος' }
+]) {
+  const origin = new URL(`https://${domain}`).origin
+  const hostname = new URL(origin).hostname
+  const actorId = `${origin}/user/${encodeURIComponent(username)}`
+  const sourceId = 'https://example.com/user/1'
+  const entries = [...mockData.entries()].filter(([id]) => id.startsWith(sourceId + '/') || id === sourceId)
+
+  for (const [id, data] of entries) {
+    const copy = JSON.parse(JSON.stringify(data).replaceAll(sourceId, actorId))
+    if (id === sourceId) {
+      copy.name = name
+      copy.preferredUsername = username
+      copy.webfinger = `${username}@${domain}`
+    }
+    mockData.set(id.replace(sourceId, actorId), copy)
+  }
+
+  const resource = `acct:${encodeURIComponent(username)}@${hostname}`
+  const query = new URLSearchParams({ resource })
+  mockData.set(`${origin}/.well-known/webfinger?${query}`, {
+    subject: resource,
+    links: [{
+      rel: 'self',
+      type: 'application/activity+json',
+      href: actorId
+    }]
   })
 }
 

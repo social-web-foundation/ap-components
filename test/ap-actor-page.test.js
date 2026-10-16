@@ -58,6 +58,37 @@ describe('<ap-actor-page>', () => {
     el.remove();
   });
 
+  for (const { label, username, domain, hostname } of [
+    { label: 'PRECIS@IDNA', username: 'αλέξανδρος', domain: 'ελληνικά.example', hostname: 'xn--hxargifdar.example' },
+    { label: 'PRECIS@ASCII', username: 'ελπίδα', domain: 'example.com', hostname: 'example.com' },
+    { label: 'ASCII@IDNA', username: 'sample', domain: 'ελληνικά.example', hostname: 'xn--hxargifdar.example' }
+  ]) {
+    it(`resolves and renders an Actor for ${label}`, async () => {
+      const el = document.createElement('ap-actor-page');
+      const expectedId = `https://${hostname}/user/${encodeURIComponent(username)}`;
+      el.webfinger = `acct:${username}@${domain}`;
+      try {
+        document.body.appendChild(el);
+        const deadline = performance.now() + 1000;
+        while (!el.json && !el._error && performance.now() < deadline) {
+          await new Promise(resolve => requestAnimationFrame(resolve));
+        }
+        expect(el._error).to.not.be.ok;
+        expect(el.json, 'actor should load through connectedCallback').to.exist;
+        await el.updateComplete;
+        expect(el.objectId).to.equal(expectedId);
+        expect(el.json.id).to.equal(expectedId);
+        expect(el.json.preferredUsername).to.equal(username);
+        expect(el.json.webfinger).to.equal(`${username}@${domain}`);
+        expect(el.shadowRoot.querySelector('ap-actor-profile')).to.exist;
+        expect(el.shadowRoot.querySelector('nav.feed-selector')).to.exist;
+        expect(el.shadowRoot.querySelector('ap-activity-collection')).to.exist;
+      } finally {
+        el.remove();
+      }
+    });
+  }
+
   it('renders an Actor when url is an object', async () => {
     const el = document.createElement('ap-actor-page');
     el.json = mockData.get('https://example.com/user/4')
