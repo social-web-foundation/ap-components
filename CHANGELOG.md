@@ -10,6 +10,15 @@ the tagged release commits.
 
 ## [Unreleased]
 
+## [1.4.5] - 2026-11-24
+
+### Changed
+
+- Update activitypub-webfinger, activitystrea.ms, and webfinger.
+- Update locked dependencies: DOMPurify and undici.
+- Update development dependencies, including @web/dev-server-rollup,
+  @web/test-runner, @web/test-runner-mocha, qs, and serialize-javascript.
+
 ## [1.4.4] - 2026-10-16
 
 ### Fixed
@@ -182,7 +191,8 @@ the tagged release commits.
 - HTML sanitization with DOMPurify.
 - Apache License, Version 2.0.
 
-[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.4...HEAD
+[Unreleased]: https://github.com/social-web-foundation/ap-components/compare/v1.4.5...HEAD
+[1.4.5]: https://github.com/social-web-foundation/ap-components/compare/v1.4.4...v1.4.5
 [1.4.4]: https://github.com/social-web-foundation/ap-components/compare/v1.4.3...v1.4.4
 [1.4.3]: https://github.com/social-web-foundation/ap-components/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/social-web-foundation/ap-components/compare/v1.4.1...v1.4.2
